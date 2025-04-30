@@ -1,0 +1,392 @@
+{
+    "p1": {
+        "bowling_style": "spin",
+        "bowler_id": "p1",
+        "runs_conceded": 400,
+        "balls_bowled": 300,
+        "wickets": 20,
+        "by_phase": {
+            "1": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "2": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "3": {
+                "runs_conceded": 100,
+                "balls_bowled": 100,
+                "wickets": 10,
+                "dots": 40
+            }
+        },
+        "vs_batsman_types": {
+            "aggressive": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            },
+            "anchor": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            }
+        }
+    },
+    "p2": {
+        "bowling_style": "fast",
+        "bowler_id": "p2",
+        "runs_conceded": 400,
+        "balls_bowled": 300,
+        "wickets": 20,
+        "by_phase": {
+            "1": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "2": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "3": {
+                "runs_conceded": 100,
+                "balls_bowled": 100,
+                "wickets": 10,
+                "dots": 40
+            }
+        },
+        "vs_batsman_types": {
+            "aggressive": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            },
+            "anchor": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            }
+        }
+    },
+    "p3": {
+        "bowling_style": "spin",
+        "bowler_id": "p3",
+        "runs_conceded": 400,
+        "balls_bowled": 300,
+        "wickets": 20,
+        "by_phase": {
+            "1": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "2": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "3": {
+                "runs_conceded": 100,
+                "balls_bowled": 100,
+                "wickets": 10,
+                "dots": 40
+            }
+        },
+        "vs_batsman_types": {
+            "aggressive": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            },
+            "anchor": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            }
+        }
+    },
+    "p4": {
+        "bowling_style": "fast",
+        "bowler_id": "p4",
+        "runs_conceded": 400,
+        "balls_bowled": 300,
+        "wickets": 20,
+        "by_phase": {
+            "1": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "2": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "3": {
+                "runs_conceded": 100,
+                "balls_bowled": 100,
+                "wickets": 10,
+                "dots": 40
+            }
+        },
+        "vs_batsman_types": {
+            "aggressive": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            },
+            "anchor": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            }
+        }
+    },
+    "p5": {
+        "bowling_style": "spin",
+        "bowler_id": "p5",
+        "runs_conceded": 400,
+        "balls_bowled": 300,
+        "wickets": 20,
+        "by_phase": {
+            "1": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "2": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "3": {
+                "runs_conceded": 100,
+                "balls_bowled": 100,
+                "wickets": 10,
+                "dots": 40
+            }
+        },
+        "vs_batsman_types": {
+            "aggressive": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            },
+            "anchor": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            }
+        }
+    },
+    "p6": {
+        "bowling_style": "fast",
+        "bowler_id": "p6",
+        "runs_conceded": 400,
+        "balls_bowled": 300,
+        "wickets": 20,
+        "by_phase": {
+            "1": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "2": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "3": {
+                "runs_conceded": 100,
+                "balls_bowled": 100,
+                "wickets": 10,
+                "dots": 40
+            }
+        },
+        "vs_batsman_types": {
+            "aggressive": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            },
+            "anchor": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            }
+        }
+    },
+    "p7": {
+        "bowling_style": "spin",
+        "bowler_id": "p7",
+        "runs_conceded": 400,
+        "balls_bowled": 300,
+        "wickets": 20,
+        "by_phase": {
+            "1": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "2": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "3": {
+                "runs_conceded": 100,
+                "balls_bowled": 100,
+                "wickets": 10,
+                "dots": 40
+            }
+        },
+        "vs_batsman_types": {
+            "aggressive": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            },
+            "anchor": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            }
+        }
+    },
+    "p8": {
+        "bowling_style": "fast",
+        "bowler_id": "p8",
+        "runs_conceded": 400,
+        "balls_bowled": 300,
+        "wickets": 20,
+        "by_phase": {
+            "1": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "2": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "3": {
+                "runs_conceded": 100,
+                "balls_bowled": 100,
+                "wickets": 10,
+                "dots": 40
+            }
+        },
+        "vs_batsman_types": {
+            "aggressive": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            },
+            "anchor": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            }
+        }
+    },
+    "p9": {
+        "bowling_style": "spin",
+        "bowler_id": "p9",
+        "runs_conceded": 400,
+        "balls_bowled": 300,
+        "wickets": 20,
+        "by_phase": {
+            "1": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "2": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "3": {
+                "runs_conceded": 100,
+                "balls_bowled": 100,
+                "wickets": 10,
+                "dots": 40
+            }
+        },
+        "vs_batsman_types": {
+            "aggressive": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            },
+            "anchor": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            }
+        }
+    },
+    "p10": {
+        "bowling_style": "fast",
+        "bowler_id": "p10",
+        "runs_conceded": 400,
+        "balls_bowled": 300,
+        "wickets": 20,
+        "by_phase": {
+            "1": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "2": {
+                "runs_conceded": 150,
+                "balls_bowled": 100,
+                "wickets": 5,
+                "dots": 50
+            },
+            "3": {
+                "runs_conceded": 100,
+                "balls_bowled": 100,
+                "wickets": 10,
+                "dots": 40
+            }
+        },
+        "vs_batsman_types": {
+            "aggressive": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            },
+            "anchor": {
+                "runs_conceded": 200,
+                "balls_bowled": 150,
+                "wickets": 10
+            }
+        }
+    }
+}

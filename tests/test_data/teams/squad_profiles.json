@@ -1,0 +1,192 @@
+{
+  "team1": {
+    "name": "Test Team 1",
+    "players": [
+      {
+        "player_id": "p1",
+        "name": "Player 1",
+        "main_role": "batsman",
+        "specific_roles": [
+          "opener"
+        ]
+      },
+      {
+        "player_id": "p2",
+        "name": "Player 2",
+        "main_role": "batsman",
+        "specific_roles": [
+          "opener"
+        ]
+      },
+      {
+        "player_id": "p3",
+        "name": "Player 3",
+        "main_role": "batsman",
+        "specific_roles": [
+          "middle-order"
+        ]
+      },
+      {
+        "player_id": "p4",
+        "name": "Player 4",
+        "main_role": "batsman",
+        "specific_roles": [
+          "middle-order"
+        ]
+      },
+      {
+        "player_id": "p5",
+        "name": "Player 5",
+        "main_role": "batsman",
+        "specific_roles": [
+          "middle-order"
+        ]
+      },
+      {
+        "player_id": "p6",
+        "name": "Player 6",
+        "main_role": "all-rounder",
+        "specific_roles": [
+          "finisher",
+          "middle-overs-specialist"
+        ]
+      },
+      {
+        "player_id": "p7",
+        "name": "Player 7",
+        "main_role": "all-rounder",
+        "specific_roles": [
+          "finisher",
+          "death-specialist"
+        ]
+      },
+      {
+        "player_id": "p8",
+        "name": "Player 8",
+        "main_role": "bowler",
+        "specific_roles": [
+          "powerplay-specialist"
+        ]
+      },
+      {
+        "player_id": "p9",
+        "name": "Player 9",
+        "main_role": "bowler",
+        "specific_roles": [
+          "middle-overs-specialist"
+        ]
+      },
+      {
+        "player_id": "p10",
+        "name": "Player 10",
+        "main_role": "bowler",
+        "specific_roles": [
+          "death-specialist"
+        ]
+      },
+      {
+        "player_id": "p11",
+        "name": "Player 11",
+        "main_role": "bowler",
+        "specific_roles": [
+          "powerplay-specialist"
+        ]
+      }
+    ]
+  },
+  "team2": {
+    "name": "Test Team 2",
+    "players": [
+      {
+        "player_id": "p12",
+        "name": "Player 12",
+        "main_role": "batsman",
+        "specific_roles": [
+          "opener"
+        ]
+      },
+      {
+        "player_id": "p13",
+        "name": "Player 13",
+        "main_role": "batsman",
+        "specific_roles": [
+          "opener"
+        ]
+      },
+      {
+        "player_id": "p14",
+        "name": "Player 14",
+        "main_role": "batsman",
+        "specific_roles": [
+          "middle-order"
+        ]
+      },
+      {
+        "player_id": "p15",
+        "name": "Player 15",
+        "main_role": "batsman",
+        "specific_roles": [
+          "middle-order"
+        ]
+      },
+      {
+        "player_id": "p16",
+        "name": "Player 16",
+        "main_role": "batsman",
+        "specific_roles": [
+          "middle-order"
+        ]
+      },
+      {
+        "player_id": "p17",
+        "name": "Player 17",
+        "main_role": "all-rounder",
+        "specific_roles": [
+          "finisher",
+          "middle-overs-specialist"
+        ]
+      },
+      {
+        "player_id": "p18",
+        "name": "Player 18",
+        "main_role": "all-rounder",
+        "specific_roles": [
+          "finisher",
+          "death-specialist"
+        ]
+      },
+      {
+        "player_id": "p19",
+        "name": "Player 19",
+        "main_role": "bowler",
+        "specific_roles": [
+          "powerplay-specialist"
+        ]
+      },
+      {
+        "player_id": "p20",
+        "name": "Player 20",
+        "main_role": "bowler",
+        "specific_roles": [
+          "middle-overs-specialist"
+        ]
+      },
+      {
+        "player_id": "p21",
+        "name": "Player 21",
+        "main_role": "bowler",
+        "specific_roles": [
+          "death-specialist"
+        ]
+      },
+      {
+        "player_id": "p22",
+        "name": "Player 22",
+        "main_role": "bowler",
+        "specific_roles": [
+          "powerplay-specialist"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+    "venue1": {
+        "first_innings_avg_score": 165,
+        "first_innings_std_score": 25,
+        "second_innings_avg_score": 155,
+        "second_innings_std_score": 30,
+        "matches_played": 50,
+        "phase_1_run_rate": 8.2,
+        "phase_1_wicket_rate": 0.7,
+        "phase_2_run_rate": 7.5,
+        "phase_2_wicket_rate": 1.1,
+        "phase_3_run_rate": 10.5,
+        "phase_3_wicket_rate": 1.8
+    }
+}

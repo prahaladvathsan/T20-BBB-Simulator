@@ -1,0 +1,452 @@
+{
+    "p1": {
+        "bat_hand": "right",
+        "batter_id": "p1",
+        "total_runs": 500,
+        "total_balls": 400,
+        "dismissals": 20,
+        "by_phase": {
+            "1": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "2": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "3": {
+                "runs": 100,
+                "balls": 100,
+                "fours": 5,
+                "sixes": 5,
+                "dots": 40,
+                "dismissals": 10
+            }
+        },
+        "vs_bowler_styles": {
+            "fast": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            },
+            "spin": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            }
+        }
+    },
+    "p2": {
+        "bat_hand": "right",
+        "batter_id": "p2",
+        "total_runs": 500,
+        "total_balls": 400,
+        "dismissals": 20,
+        "by_phase": {
+            "1": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "2": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "3": {
+                "runs": 100,
+                "balls": 100,
+                "fours": 5,
+                "sixes": 5,
+                "dots": 40,
+                "dismissals": 10
+            }
+        },
+        "vs_bowler_styles": {
+            "fast": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            },
+            "spin": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            }
+        }
+    },
+    "p3": {
+        "bat_hand": "right",
+        "batter_id": "p3",
+        "total_runs": 500,
+        "total_balls": 400,
+        "dismissals": 20,
+        "by_phase": {
+            "1": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "2": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "3": {
+                "runs": 100,
+                "balls": 100,
+                "fours": 5,
+                "sixes": 5,
+                "dots": 40,
+                "dismissals": 10
+            }
+        },
+        "vs_bowler_styles": {
+            "fast": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            },
+            "spin": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            }
+        }
+    },
+    "p4": {
+        "bat_hand": "right",
+        "batter_id": "p4",
+        "total_runs": 500,
+        "total_balls": 400,
+        "dismissals": 20,
+        "by_phase": {
+            "1": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "2": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "3": {
+                "runs": 100,
+                "balls": 100,
+                "fours": 5,
+                "sixes": 5,
+                "dots": 40,
+                "dismissals": 10
+            }
+        },
+        "vs_bowler_styles": {
+            "fast": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            },
+            "spin": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            }
+        }
+    },
+    "p5": {
+        "bat_hand": "right",
+        "batter_id": "p5",
+        "total_runs": 500,
+        "total_balls": 400,
+        "dismissals": 20,
+        "by_phase": {
+            "1": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "2": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "3": {
+                "runs": 100,
+                "balls": 100,
+                "fours": 5,
+                "sixes": 5,
+                "dots": 40,
+                "dismissals": 10
+            }
+        },
+        "vs_bowler_styles": {
+            "fast": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            },
+            "spin": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            }
+        }
+    },
+    "p6": {
+        "bat_hand": "right",
+        "batter_id": "p6",
+        "total_runs": 500,
+        "total_balls": 400,
+        "dismissals": 20,
+        "by_phase": {
+            "1": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "2": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "3": {
+                "runs": 100,
+                "balls": 100,
+                "fours": 5,
+                "sixes": 5,
+                "dots": 40,
+                "dismissals": 10
+            }
+        },
+        "vs_bowler_styles": {
+            "fast": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            },
+            "spin": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            }
+        }
+    },
+    "p7": {
+        "bat_hand": "right",
+        "batter_id": "p7",
+        "total_runs": 500,
+        "total_balls": 400,
+        "dismissals": 20,
+        "by_phase": {
+            "1": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "2": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "3": {
+                "runs": 100,
+                "balls": 100,
+                "fours": 5,
+                "sixes": 5,
+                "dots": 40,
+                "dismissals": 10
+            }
+        },
+        "vs_bowler_styles": {
+            "fast": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            },
+            "spin": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            }
+        }
+    },
+    "p8": {
+        "bat_hand": "right",
+        "batter_id": "p8",
+        "total_runs": 500,
+        "total_balls": 400,
+        "dismissals": 20,
+        "by_phase": {
+            "1": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "2": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "3": {
+                "runs": 100,
+                "balls": 100,
+                "fours": 5,
+                "sixes": 5,
+                "dots": 40,
+                "dismissals": 10
+            }
+        },
+        "vs_bowler_styles": {
+            "fast": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            },
+            "spin": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            }
+        }
+    },
+    "p9": {
+        "bat_hand": "right",
+        "batter_id": "p9",
+        "total_runs": 500,
+        "total_balls": 400,
+        "dismissals": 20,
+        "by_phase": {
+            "1": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "2": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "3": {
+                "runs": 100,
+                "balls": 100,
+                "fours": 5,
+                "sixes": 5,
+                "dots": 40,
+                "dismissals": 10
+            }
+        },
+        "vs_bowler_styles": {
+            "fast": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            },
+            "spin": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            }
+        }
+    },
+    "p10": {
+        "bat_hand": "right",
+        "batter_id": "p10",
+        "total_runs": 500,
+        "total_balls": 400,
+        "dismissals": 20,
+        "by_phase": {
+            "1": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "2": {
+                "runs": 200,
+                "balls": 150,
+                "fours": 10,
+                "sixes": 5,
+                "dots": 80,
+                "dismissals": 5
+            },
+            "3": {
+                "runs": 100,
+                "balls": 100,
+                "fours": 5,
+                "sixes": 5,
+                "dots": 40,
+                "dismissals": 10
+            }
+        },
+        "vs_bowler_styles": {
+            "fast": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            },
+            "spin": {
+                "runs": 250,
+                "balls": 200,
+                "dismissals": 10
+            }
+        }
+    }
+}
