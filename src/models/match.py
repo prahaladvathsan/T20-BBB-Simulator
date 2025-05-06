@@ -73,9 +73,9 @@ class Match:
             'current_bowler': None,
             'partnerships': [],
             'current_partnership': {'runs': 0, 'balls': 0},
-            'phase_scores': {1: 0, 2: 0, 3: 0},
-            'phase_wickets': {1: 0, 2: 0, 3: 0},
-            'phase_balls': {1: 0, 2: 0, 3: 0},
+            'phase_scores': {1: 0, 2: 0, 3: 0, 4: 0},
+            'phase_wickets': {1: 0, 2: 0, 3: 0, 4: 0},
+            'phase_balls': {1: 0, 2: 0, 3: 0, 4: 0},
             'over_history': {},
             'batsmen_stats': {},
             'bowler_stats': {}
@@ -233,7 +233,7 @@ class Match:
                 break
             
             # Set current phase
-            current_phase = 1 if over <= 6 else (2 if over <= 15 else 3)
+            current_phase = 1 if over <= 6 else (2 if over <= 12 else (3 if over <= 16 else 4))
             
             # Update match state for bowler selection
             match_state = self._get_current_match_state()
@@ -428,11 +428,11 @@ class Match:
             match_state: Current match situation
             
         Returns:
-            Outcome code (int) or string for the simulated ball
+            Outcome code (int) representing the ball result
         """
-        # Base simulation - batsman vs bowler matchup
-        batsman_prob, _ = batsman.get_batting_outcome_probability(bowler, phase, match_state)
-        bowler_prob, _ = bowler.get_bowling_outcome_probability(batsman, phase, match_state)
+        # Get probabilities from both batsman and bowler
+        batsman_prob = batsman.get_batting_outcome_probability(bowler, phase, match_state)
+        bowler_prob = bowler.get_bowling_outcome_probability(batsman, phase, match_state)
         
         # Combine probabilities with weighted average
         # Giving slightly more weight to the batsman in T20 format
@@ -441,24 +441,6 @@ class Match:
             batsman_value = batsman_prob.get(outcome, 0)
             bowler_value = bowler_prob.get(outcome, 0)
             combined_probs[outcome] = 0.55 * batsman_value + 0.45 * bowler_value
-        
-        # Add small chance of extras
-        extras_prob = 0.08  # 8% chance of an extra
-        
-        # Adjust extras probability based on bowler accuracy
-        if hasattr(bowler, 'economy_rate'):
-            extras_prob = min(0.15, max(0.04, extras_prob * (bowler.economy_rate / 7.5)))
-        
-        # If random value falls within extras range, return an extras outcome
-        if random.random() < extras_prob:
-            # Determine type of extra
-            extra_type = random.choices(
-                ['wide', 'no_ball', 'bye', 'leg_bye'],
-                weights=[0.6, 0.25, 0.1, 0.05],
-                k=1
-            )[0]
-            
-            return extra_type
         
         # Convert probabilities to list format for random.choices
         outcomes = list(combined_probs.keys())
@@ -469,16 +451,14 @@ class Match:
         normalized_probs = [p/total_prob for p in probabilities]
         
         # Select outcome based on probabilities
-        selected_outcome = random.choices(outcomes, weights=normalized_probs, k=1)[0]
-        
-        return selected_outcome
+        return random.choices(outcomes, weights=normalized_probs, k=1)[0]
     
     def _process_ball_outcome(self, outcome, innings_data):
         """
         Process the outcome of a simulated ball.
         
         Args:
-            outcome: Ball outcome code or string
+            outcome: Ball outcome code
             innings_data: Current innings data
             
         Returns:
@@ -490,35 +470,28 @@ class Match:
         is_extra = False
         extras_type = None
         
-        # Process based on outcome type
-        if isinstance(outcome, int):
-            # Standard numerical outcomes
-            if outcome == 0:
-                runs = 0  # Dot ball
-            elif outcome in [1, 2, 3, 4, 6]:
-                runs = outcome  # Regular runs
-            elif outcome == 7:
-                is_wicket = True  # Wicket
-            
-        elif isinstance(outcome, str):
-            # Handle extras
+        # Process based on outcome code
+        if outcome == 0:  # dot ball
+            runs = 0
+        elif outcome in [1, 2, 3, 4, 6]:  # regular runs
+            runs = outcome
+        elif outcome == 7:  # wicket
+            is_wicket = True
+        elif outcome == 8:  # extras (wides/no-balls)
             is_extra = True
-            
-            if outcome == 'wide':
-                runs = 1
-                extras_type = 'wide'
-            elif outcome == 'no_ball':
-                runs = 1
-                extras_type = 'no_ball'
-            elif outcome == 'bye':
-                # Byes typically result in 1-4 runs
-                runs = random.choices([1, 2, 3, 4], weights=[0.5, 0.3, 0.1, 0.1], k=1)[0]
-                extras_type = 'bye'
-            elif outcome == 'leg_bye':
-                # Leg byes typically result in 1-4 runs
-                runs = random.choices([1, 2, 3, 4], weights=[0.6, 0.3, 0.05, 0.05], k=1)[0]
-                extras_type = 'leg_bye'
-        
+            # Randomly choose between wide and no-ball
+            extras_type = random.choice(['wide', 'no_ball'])
+            runs = 1
+            # Additional runs on extras (rare but possible)
+            if random.random() < 0.40:  # 15% chance of additional runs
+                runs += random.choice([1, 2, 4, 6])
+        elif outcome == 9:  # byes/leg-byes
+            is_extra = True
+            # Randomly choose between bye and leg-bye
+            extras_type = random.choice(['bye', 'leg_bye'])
+            # Byes typically result in 1-4 runs
+            runs = random.choices([1, 2, 3, 4], weights=[0.6, 0.1, 0.05, 0.25], k=1)[0]
+
         return runs, is_wicket, is_extra, extras_type
     
     def _get_current_match_state(self, is_batting=None):
@@ -535,7 +508,14 @@ class Match:
         
         # Determine current phase
         over = innings_data['overs'] + 1  # Current over (1-indexed)
-        current_phase = 1 if over <= 6 else (2 if over <= 15 else 3)
+        if over <= 6:
+            current_phase = 1  # Powerplay
+        elif over <= 12:
+            current_phase = 2  # Early Middle
+        elif over <= 16:
+            current_phase = 3  # Late Middle
+        else:
+            current_phase = 4  # Death
         
         # Calculate balls remaining
         total_balls = 120

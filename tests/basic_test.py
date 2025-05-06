@@ -70,15 +70,16 @@ class BasicSimulatorTest(unittest.TestCase):
         for i in range(1, 23):  # Extended to 22 players (11 per team)
             player_id = f"p{i}"
             batting_stats[player_id] = {
-                "bat_hand": "right",
+                "bat_hand": "right", 
                 "batter_id": player_id,
                 "total_runs": 500 + (i * 50),
                 "total_balls": 400 + (i * 20),
                 "dismissals": 15,
                 "by_phase": {
-                    "1": {"runs": 200, "balls": 150, "fours": 10, "sixes": 5, "dots": 80, "dismissals": 5},
-                    "2": {"runs": 200, "balls": 150, "fours": 10, "sixes": 5, "dots": 80, "dismissals": 5},
-                    "3": {"runs": 100, "balls": 100, "fours": 5, "sixes": 5, "dots": 40, "dismissals": 5}
+                    "1": {"runs": 150, "balls": 100, "fours": 8, "sixes": 4, "dots": 50, "dismissals": 3},  # Powerplay (1-6)
+                    "2": {"runs": 150, "balls": 100, "fours": 7, "sixes": 3, "dots": 50, "dismissals": 4},  # Early Middle (7-12)
+                    "3": {"runs": 100, "balls": 100, "fours": 5, "sixes": 3, "dots": 50, "dismissals": 4},  # Late Middle (13-16)
+                    "4": {"runs": 100, "balls": 100, "fours": 5, "sixes": 5, "dots": 50, "dismissals": 4}   # Death (17-20)
                 },
                 "vs_bowler_styles": {
                     "fast": {"runs": 250, "balls": 200, "dismissals": 8},
@@ -97,9 +98,10 @@ class BasicSimulatorTest(unittest.TestCase):
                 "balls_bowled": 300 + (i * 10),
                 "wickets": 15 + (i % 5),
                 "by_phase": {
-                    "1": {"runs_conceded": 150, "balls_bowled": 100, "wickets": 5, "dots": 50},
-                    "2": {"runs_conceded": 150, "balls_bowled": 100, "wickets": 5, "dots": 50},
-                    "3": {"runs_conceded": 100, "balls_bowled": 100, "wickets": 5, "dots": 30}
+                    "1": {"runs_conceded": 120, "balls_bowled": 80, "wickets": 3, "dots": 40},  # Powerplay
+                    "2": {"runs_conceded": 100, "balls_bowled": 80, "wickets": 4, "dots": 35},  # Early Middle
+                    "3": {"runs_conceded": 90, "balls_bowled": 70, "wickets": 4, "dots": 30},   # Late Middle  
+                    "4": {"runs_conceded": 90, "balls_bowled": 70, "wickets": 4, "dots": 25}    # Death
                 },
                 "vs_batsman_types": {
                     "aggressive": {"runs_conceded": 200, "balls_bowled": 150, "wickets": 8},
@@ -133,12 +135,14 @@ class BasicSimulatorTest(unittest.TestCase):
                 "second_innings_avg_score": 155,
                 "second_innings_std_score": 25,
                 "matches_played": 20,
-                "phase_1_run_rate": 8.2,
-                "phase_2_run_rate": 7.5,
-                "phase_3_run_rate": 10.1,
+                "phase_1_run_rate": 8.2,  # Powerplay
+                "phase_2_run_rate": 7.5,  # Early Middle
+                "phase_3_run_rate": 8.8,  # Late Middle
+                "phase_4_run_rate": 10.1, # Death
                 "phase_1_wicket_rate": 0.8,
                 "phase_2_wicket_rate": 1.2,
-                "phase_3_wicket_rate": 1.6
+                "phase_3_wicket_rate": 1.4,
+                "phase_4_wicket_rate": 1.6
             },
             "venue2": {
                 "first_innings_avg_score": 175,
@@ -146,12 +150,14 @@ class BasicSimulatorTest(unittest.TestCase):
                 "second_innings_avg_score": 165,
                 "second_innings_std_score": 22,
                 "matches_played": 15,
-                "phase_1_run_rate": 8.5,
-                "phase_2_run_rate": 7.8,
-                "phase_3_run_rate": 10.5,
+                "phase_1_run_rate": 8.5,  # Powerplay
+                "phase_2_run_rate": 7.8,  # Early Middle
+                "phase_3_run_rate": 9.2,  # Late Middle
+                "phase_4_run_rate": 10.5, # Death
                 "phase_1_wicket_rate": 0.7,
                 "phase_2_wicket_rate": 1.1,
-                "phase_3_wicket_rate": 1.5
+                "phase_3_wicket_rate": 1.3,
+                "phase_4_wicket_rate": 1.5
             },
             "venue3": {
                 "first_innings_avg_score": 155,
@@ -159,12 +165,14 @@ class BasicSimulatorTest(unittest.TestCase):
                 "second_innings_avg_score": 145,
                 "second_innings_std_score": 28,
                 "matches_played": 25,
-                "phase_1_run_rate": 7.8,
-                "phase_2_run_rate": 7.2,
-                "phase_3_run_rate": 9.7,
+                "phase_1_run_rate": 7.8,  # Powerplay
+                "phase_2_run_rate": 7.2,  # Early Middle
+                "phase_3_run_rate": 8.5,  # Late Middle
+                "phase_4_run_rate": 9.7,  # Death
                 "phase_1_wicket_rate": 0.9,
                 "phase_2_wicket_rate": 1.3,
-                "phase_3_wicket_rate": 1.7
+                "phase_3_wicket_rate": 1.5,
+                "phase_4_wicket_rate": 1.7
             }
         }
         
@@ -247,6 +255,9 @@ class BasicSimulatorTest(unittest.TestCase):
                         elif outcome in ['bye', 'leg_bye']:
                             runs = random.choice([1, 2, 4])
                         
+                        # Determine phase based on over number
+                        phase = 1 if over <= 6 else (2 if over <= 12 else (3 if over <= 16 else 4))
+                        
                         # Create the ball record
                         ball_record = {
                             'match_id': f'match{match_id}',
@@ -255,6 +266,7 @@ class BasicSimulatorTest(unittest.TestCase):
                             'innings': innings,
                             'over': over,
                             'ball': ball,
+                            'phase': phase,  # Add phase to ball record
                             'batting_team': batting_team,
                             'bowling_team': bowling_team,
                             'striker': batsmen[0],
@@ -294,7 +306,7 @@ class BasicSimulatorTest(unittest.TestCase):
             fieldnames = [
                 'match_id', 'match_date', 'venue_id', 'innings', 'over', 'ball',
                 'batting_team', 'bowling_team', 'striker', 'non_striker', 'bowler',
-                'runs', 'is_wicket', 'outcome', 'shot_type', 'line', 'length'
+                'runs', 'is_wicket', 'outcome', 'shot_type', 'line', 'length', 'phase'
             ]
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             writer.writeheader()

@@ -13,9 +13,10 @@ class Player:
     """
     
     # Constants for match phases
-    POWERPLAY = 1  # Overs 1-6
-    MIDDLE = 2     # Overs 7-15
-    DEATH = 3      # Overs 16-20
+    POWERPLAY = 1     # Overs 1-6
+    EARLY_MIDDLE = 2  # Overs 7-12  
+    LATE_MIDDLE = 3   # Overs 13-16
+    DEATH = 4         # Overs 17-20
     
     # Default probability distributions by phase
     PHASE_DEFAULTS = {
@@ -30,16 +31,27 @@ class Player:
             8: 0.03,  # extras (no-balls, wides)
             9: 0.02   # byes and leg-byes
         },
-        MIDDLE: {
+        EARLY_MIDDLE: {
             0: 0.36,  # dot ball
-            1: 0.33,  # single
+            1: 0.40,  # single
             2: 0.08,  # double
             3: 0.01,  # triple
             4: 0.08,  # four
             6: 0.02,  # six
             7: 0.01,  # wicket
-            8: 0.06,  # extras (no-balls, wides)
-            9: 0.05   # byes and leg-byes
+            8: 0.03,  # extras
+            9: 0.01   # byes
+        },
+        LATE_MIDDLE: {
+            0: 0.32,  # dot ball
+            1: 0.35,  # single
+            2: 0.10,  # double
+            3: 0.01,  # triple
+            4: 0.12,  # four
+            6: 0.05,  # six
+            7: 0.02,  # wicket
+            8: 0.02,  # extras
+            9: 0.01   # byes
         },
         DEATH: {
             0: 0.25,  # dot ball
@@ -49,11 +61,11 @@ class Player:
             4: 0.15,  # four
             6: 0.15,  # six
             7: 0.04,  # wicket
-            8: 0.05,  # extras (no-balls, wides)
-            9: 0.04   # byes and leg-byes
+            8: 0.06,  # extras
+            9: 0.03   # byes
         }
     }
-
+    
     # Possible ball outcomes and their codes
     OUTCOMES = {
         0: "dot",
@@ -137,21 +149,21 @@ class Player:
         # Bowling metrics
         if self.bowling_stats:
             # Overall metrics
-            total_runs_conceded = self.bowling_stats.get('runs_conceded', 0)
-            total_balls_bowled = self.bowling_stats.get('balls_bowled', 0)
+            total_runs = self.bowling_stats.get('runs', 0)
+            total_balls = self.bowling_stats.get('balls', 0)
             total_wickets = self.bowling_stats.get('wickets', 0)
             
-            self.economy_rate = (total_runs_conceded / max(1, total_balls_bowled)) * 6
-            self.bowling_avg = total_runs_conceded / max(1, total_wickets)
-            self.bowling_sr = total_balls_bowled / max(1, total_wickets)
+            self.economy_rate = (total_runs / max(1, total_balls)) * 6
+            self.bowling_avg = total_runs / max(1, total_wickets)
+            self.bowling_sr = total_balls / max(1, total_wickets)
             
             # Phase-specific metrics
             self.phase_economy_rates = {}
             by_phase = self.bowling_stats.get('by_phase', {})
             
             for phase, stats in by_phase.items():
-                phase_runs = stats.get('runs_conceded', 0)
-                phase_balls = stats.get('balls_bowled', 0)
+                phase_runs = stats.get('runs', 0)
+                phase_balls = stats.get('balls', 0)
                 phase_wickets = stats.get('wickets', 0)
                 
                 self.phase_economy_rates[phase] = (phase_runs / max(1, phase_balls)) * 6
@@ -162,8 +174,8 @@ class Player:
             vs_types = self.bowling_stats.get('vs_batsman_types', {})
             
             for batter_type, stats in vs_types.items():
-                type_runs = stats.get('runs_conceded', 0)
-                type_balls = stats.get('balls_bowled', 0)
+                type_runs = stats.get('runs', 0)
+                type_balls = stats.get('balls', 0)
                 type_wickets = stats.get('wickets', 0)
                 
                 self.vs_batsman_type_stats[batter_type] = {
@@ -177,7 +189,7 @@ class Player:
             ll_dist = self.bowling_stats.get('line_length_distribution', {})
             
             for ll_key, count in ll_dist.items():
-                self.bowling_line_length[ll_key] = count / max(1, total_balls_bowled)
+                self.bowling_line_length[ll_key] = count / max(1, total_balls)
     
     def get_batting_outcome_probability(self, bowler, phase: int, match_state: Dict) -> Tuple[Dict[int, float], int]:
         """
@@ -207,18 +219,25 @@ class Player:
         # Phase-specific base probabilities
         phase_probs, phase_balls = self._get_phase_probabilities(phase)
         
-        # Adjust for bowler matchup
-        bowler_style = bowler.bowling_stats.get('bowling_style', 'medium')
-        matchup_probs = self._adjust_for_bowler_matchup(phase_probs, bowler_style)
+        # bowler matchup probabilities
+        bowler_style = bowler.bowling_stats.get('bowling_style', 'unknown')
+        matchup_probs, matchup_balls = self._get_bowler_matchup_probabilities(bowler_style)
+
+        # Combine phase and matchup probabilities weighted by balls faced
+        combined_probs = {}
+        for outcome in default_probs.keys():
+            combined_probs[outcome] = (phase_probs.get(outcome, 0) * phase_balls + 
+                                       matchup_probs.get(outcome, 0) * matchup_balls) / (phase_balls + matchup_balls)
+        
         
         # Adjust for match situation
-        situation_probs = self._adjust_for_match_situation(matchup_probs, match_state)
+        # situation_probs = self._adjust_for_match_situation(match_state, combined_probs)
         
         # Ensure probabilities sum to 1
-        total_prob = sum(situation_probs.values())
+        total_prob = sum(combined_probs.values())
         if total_prob > 0:
-            normalized_probs = {k: v/total_prob for k, v in situation_probs.items()}
-            return normalized_probs, phase_balls
+            normalized_probs = {k: v/total_prob for k, v in combined_probs.items()}
+            return normalized_probs
         
         return default_probs, 0
     
@@ -274,14 +293,77 @@ class Player:
                     4: four_prob,
                     6: six_prob,
                     7: wicket_prob,
-                    8: extra_prob,  # Default extras probability
-                    9: bye_prob     # Default byes probability
+                    8: extra_prob,
+                    9: bye_prob
                 }
                 
                 return custom_probs, phase_balls
         
         # Fall back to default if we don't have enough data
         return phase_defaults.get(phase, phase_defaults[self.MIDDLE]), 0
+    
+    def _get_bowler_matchup_probabilities(self, bowl_style: str) -> Tuple[Dict[int, float], int]:
+        """
+        Get batting probabilities against a specific bowler style.
+        """
+
+        # Default probability distribution (to be used if data is missing)
+        default_probs = {
+            0: 0.4,  # dot ball
+            1: 0.35, # single
+            2: 0.1,  # double
+            3: 0.01, # triple
+            4: 0.1,  # four
+            6: 0.03, # six
+            7: 0.01, # wicket
+            8: 0.01, # extras
+            9: 0.01  # byes
+        }
+
+        if self.batting_stats and 'vs_bowler_styles' in self.batting_stats:
+            bowl_style_stats = self.batting_stats['vs_bowler_styles'][bowl_style]
+
+            style_runs = bowl_style_stats.get('runs', 0)
+            style_balls = bowl_style_stats.get('balls', 0)
+            style_dismissals = bowl_style_stats.get('dismissals', 0)
+            style_singles = bowl_style_stats.get('singles', 0)
+            style_fours = bowl_style_stats.get('fours', 0)
+            style_sixes = bowl_style_stats.get('sixes', 0)
+            style_dots = bowl_style_stats.get('dots', 0)
+
+            if style_balls > 0:
+                # Calculate probabilities based on historical data
+                dot_prob = style_dots / style_balls
+                four_prob = style_fours / style_balls
+                six_prob = style_sixes / style_balls
+                wicket_prob = style_dismissals / style_balls
+                single_prob = style_singles / style_balls
+                extra_prob = 0.005
+                bye_prob = 0.005
+
+            
+                # Estimate remaining probabilities for 2s, 3s
+                remaining_prob = 1.0 - (dot_prob + four_prob + six_prob + wicket_prob + single_prob + extra_prob + bye_prob)
+
+                double_prob = 0.9 * remaining_prob
+                triple_prob = 0.1 * remaining_prob
+
+                custom_probs = {
+                    0: dot_prob,
+                    1: single_prob,
+                    2: double_prob,
+                    3: triple_prob,
+                    4: four_prob,
+                    6: six_prob,
+                    7: wicket_prob,
+                    8: extra_prob,
+                    9: bye_prob
+                }
+
+                return custom_probs, style_balls
+            
+        return default_probs, 0
+
     
     def get_bowling_outcome_probability(self, batsman, phase: int, match_state: Dict) -> Tuple[Dict[int, float], int]:
         """
@@ -312,19 +394,25 @@ class Player:
         phase_probs, phase_balls = self._get_bowling_phase_probabilities(phase)
         
         # Adjust for batsman matchup
-        batsman_type = self._determine_batsman_type(batsman)
-        matchup_probs = self._adjust_for_batsman_matchup(phase_probs, batsman_type)
+        batsman_type = batsman.batting_stats.get('bat_hand', 'unknown')
+        matchup_probs = self._get_batsman_matchup_probabilities(batsman_type)
+
+        combined_probs = {}
+        for outcome in default_probs.keys():
+            combined_probs[outcome] = (phase_probs.get(outcome, 0) * phase_balls + 
+                                       matchup_probs.get(outcome, 0) * phase_balls) / (phase_balls + phase_balls)
+        
         
         # Adjust for match situation
-        situation_probs = self._adjust_bowling_for_match_situation(matchup_probs, match_state)
+        # situation_probs = self._adjust_bowling_for_match_situation(matchup_probs, match_state)
         
         # Ensure probabilities sum to 1
-        total_prob = sum(situation_probs.values())
+        total_prob = sum(combined_probs.values())
         if total_prob > 0:
-            normalized_probs = {k: v/total_prob for k, v in situation_probs.items()}
-            return normalized_probs, phase_balls
+            normalized_probs = {k: v/total_prob for k, v in combined_probs.items()}
+            return normalized_probs
         
-        return default_probs, 0
+        return default_probs
 
     def _get_bowling_phase_probabilities(self, phase: int) -> Tuple[Dict[int, float], int]:
         """
@@ -341,8 +429,11 @@ class Player:
             self.POWERPLAY: {
                 0: 0.35, 1: 0.3, 2: 0.05, 3: 0.01, 4: 0.2, 6: 0.08, 7: 0.01, 8: 0.005, 9: 0.005
             },
-            self.MIDDLE: {
+            self.EARLY_MIDDLE: {
                 0: 0.4, 1: 0.4, 2: 0.08, 3: 0.01, 4: 0.08, 6: 0.02, 7: 0.01, 8: 0.005, 9: 0.005
+            },
+            self.LATE_MIDDLE: {
+                0: 0.3, 1: 0.25, 2: 0.1, 3: 0.01, 4: 0.15, 6: 0.15, 7: 0.04, 8: 0.01, 9: 0.01
             },
             self.DEATH: {
                 0: 0.3, 1: 0.25, 2: 0.1, 3: 0.01, 4: 0.15, 6: 0.15, 7: 0.04, 8: 0.01, 9: 0.01
@@ -355,12 +446,15 @@ class Player:
             phase_data = self.bowling_stats['by_phase'][phase_str]
             
             # Extract relevant statistics
-            phase_runs = phase_data.get('runs_conceded', 0)
-            phase_balls = phase_data.get('balls_bowled', 0)
+            phase_runs = phase_data.get('runs', 0)
+            phase_balls = phase_data.get('balls', 0)
             phase_dots = phase_data.get('dots', 0)
-            phase_fours = phase_data.get('fours_conceded', 0)
-            phase_sixes = phase_data.get('sixes_conceded', 0)
+            phase_fours = phase_data.get('fours', 0)
+            phase_sixes = phase_data.get('sixes', 0)
             phase_wickets = phase_data.get('wickets', 0)
+            phase_extras = phase_data.get('wides', 0) + phase_data.get('no_balls', 0)
+            phase_byes = phase_data.get('byes', 0) + phase_data.get('leg_byes', 0)
+            phase_singles = phase_data.get('singles', 0)
             
             if phase_balls > 0:
                 # Calculate probabilities based on historical data
@@ -368,77 +462,93 @@ class Player:
                 four_prob = phase_fours / phase_balls
                 six_prob = phase_sixes / phase_balls
                 wicket_prob = phase_wickets / phase_balls
+                extra_prob = phase_extras / phase_balls
+                bye_prob = phase_byes / phase_balls
+                single_prob = phase_singles / phase_balls
                 
                 # Estimate remaining probabilities for 1s, 2s, 3s
-                remaining_prob = 1.0 - (dot_prob + four_prob + six_prob + wicket_prob)
-                remaining_runs = phase_runs - (4 * phase_fours + 6 * phase_sixes)
-                remaining_balls = phase_balls - (phase_dots + phase_fours + phase_sixes)
+                remaining_prob = 1.0 - (dot_prob + four_prob + six_prob + wicket_prob + extra_prob + bye_prob + single_prob)
+
+                double_prob = 0.9 * remaining_prob
+                triple_prob = 0.1 * remaining_prob
+                    
+                # Create custom probability distribution
+                custom_probs = {
+                    0: dot_prob,
+                    1: single_prob,
+                    2: double_prob,
+                    3: triple_prob,
+                    4: four_prob,
+                    6: six_prob,
+                    7: wicket_prob,
+                    8: extra_prob,
+                    9: bye_prob
+                }
                 
-                # Distribute remaining probability
-                if remaining_balls > 0:
-                    avg_remaining = remaining_runs / remaining_balls
-                    
-                    # Simple distribution based on average
-                    if avg_remaining < 1.2:
-                        single_prob = 0.8 * remaining_prob
-                        double_prob = 0.15 * remaining_prob
-                        triple_prob = 0.05 * remaining_prob
-                    elif avg_remaining < 1.8:
-                        single_prob = 0.6 * remaining_prob
-                        double_prob = 0.35 * remaining_prob
-                        triple_prob = 0.05 * remaining_prob
-                    else:
-                        single_prob = 0.4 * remaining_prob
-                        double_prob = 0.55 * remaining_prob
-                        triple_prob = 0.05 * remaining_prob
-                    
-                    # Create custom probability distribution
-                    custom_probs = {
-                        0: dot_prob,
-                        1: single_prob,
-                        2: double_prob,
-                        3: triple_prob,
-                        4: four_prob,
-                        6: six_prob,
-                        7: wicket_prob,
-                        8: 0.005,  # Default extras probability
-                        9: 0.005   # Default byes probability
-                    }
-                    
-                    return custom_probs, phase_balls
+                return custom_probs, phase_balls
         
         # Fall back to default if we don't have enough data
-        return phase_defaults.get(phase, phase_defaults[self.MIDDLE]), 0
-
-    def simulate_ball_outcome(self, opponent, is_batting: bool, phase: int, match_state: Dict) -> Tuple[int, int]:
+        return phase_defaults.get(phase, phase_defaults[self.EARLY_MIDDLE]), 0
+    
+    def _get_batsman_matchup_probabilities(self, batsman_type: str) -> Dict[int, float]:
         """
-        Simulate the outcome of a single ball.
+        Get bowling probabilities against a specific batsman type.
         
         Args:
-            opponent: Opponent Player object (bowler if is_batting=True, batsman if is_batting=False)
-            is_batting: Whether this player is batting (True) or bowling (False)
-            phase: Current match phase
-            match_state: Current match situation
-            
-        Returns:
-            Tuple of (outcome code, number of balls distribution is based on)
-            Outcome codes: 0=dot, 1=single, 2=double, 3=triple, 4=four, 6=six, 7=wicket, 8=extras, 9=byes
+            batsman_type: Type of batsman (e.g., left-handed, right-handed)
         """
-        if is_batting:
-            # Get probabilities for batting against this bowler
-            probs, balls = self.get_batting_outcome_probability(opponent, phase, match_state)
-        else:
-            # Get probabilities for bowling against this batsman
-            probs, balls = self.get_bowling_outcome_probability(opponent, phase, match_state)
+        # Default probability distribution (to be used if data is missing)
+        default_probs = {
+            0: 0.4,  # dot ball
+            1: 0.35, # single
+            2: 0.1,  # double
+            3: 0.01, # triple
+            4: 0.1,  # four
+            6: 0.03, # six
+            7: 0.01, # wicket
+            8: 0.01, # extras
+            9: 0.01  # byes
+        }
+
+        if self.bowling_stats and 'vs_batsman_types' in self.bowling_stats:
+            batsman_stats = self.bowling_stats['vs_batsman_types'].get(batsman_type, {})
+            
+            type_runs = batsman_stats.get('runs', 0)
+            type_balls = batsman_stats.get('balls', 0)
+            type_wickets = batsman_stats.get('wickets', 0)
+            
+            if type_balls > 0:
+                # Calculate probabilities based on historical data
+                dot_prob = batsman_stats.get('dots', 0) / type_balls
+                four_prob = batsman_stats.get('fours', 0) / type_balls
+                six_prob = batsman_stats.get('sixes', 0) / type_balls
+                wicket_prob = type_wickets / type_balls
+                single_prob = batsman_stats.get('singles', 0) / type_balls
+                extra_prob = batsman_stats.get('extras', 0) / type_balls
+                bye_prob = batsman_stats.get('byes', 0) / type_balls
+
+                # Estimate remaining probabilities for other outcomes
+                remaining_prob = (1.0 - (dot_prob + four_prob + six_prob + wicket_prob + extra_prob + bye_prob + single_prob))
+
+                double_prob = remaining_prob * (batsman_stats.get('doubles', 0) / type_balls)
+                triple_prob = remaining_prob * (batsman_stats.get('triples', 0) / type_balls)
+
+                custom_probs = {
+                    0: dot_prob,
+                    1: single_prob,
+                    2: double_prob,
+                    3: triple_prob,
+                    4: four_prob,
+                    6: six_prob,
+                    7: wicket_prob,
+                    8: extra_prob,
+                    9: bye_prob
+                }
+
+                return custom_probs
+            
         
-        # Convert probabilities to list format for numpy.random.choice
-        outcomes = list(probs.keys())
-        probabilities = [probs[outcome] for outcome in outcomes]
-        
-        # Simulate ball outcome using weighted random selection
-        outcome = np.random.choice(outcomes, p=probabilities)
-        
-        return outcome, balls
+        return default_probs
     
     def __str__(self) -> str:
         """String representation of the player."""

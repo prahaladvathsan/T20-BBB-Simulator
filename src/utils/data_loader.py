@@ -143,10 +143,12 @@ class DataLoader:
                 over_num = float(over)
                 if 0 < over_num <= 6:
                     return 1  # Powerplay
-                elif 6 < over_num <= 15:
-                    return 2  # Middle overs
-                elif 15 < over_num <= 20:
-                    return 3  # Death overs
+                elif 6 < over_num <= 12:
+                    return 2  # Early Middle
+                elif 12 < over_num <= 16:
+                    return 3  # Late Middle
+                elif 16 < over_num <= 20:
+                    return 4  # Death
                 else:
                     return 0  # Invalid over
             except (ValueError, TypeError):

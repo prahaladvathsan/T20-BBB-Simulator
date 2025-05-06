@@ -7,28 +7,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -52,28 +60,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -97,28 +113,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -142,28 +166,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -187,28 +219,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -232,28 +272,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -277,28 +325,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -322,28 +378,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -367,28 +431,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -412,28 +484,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -457,28 +537,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -502,28 +590,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -547,28 +643,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -592,28 +696,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -637,28 +749,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -682,28 +802,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -727,28 +855,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -772,28 +908,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -817,28 +961,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -862,28 +1014,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -907,28 +1067,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
@@ -952,28 +1120,36 @@
     "dismissals": 15,
     "by_phase": {
       "1": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 8,
+        "sixes": 4,
+        "dots": 50,
+        "dismissals": 3
       },
       "2": {
-        "runs": 200,
-        "balls": 150,
-        "fours": 10,
-        "sixes": 5,
-        "dots": 80,
-        "dismissals": 5
+        "runs": 150,
+        "balls": 100,
+        "fours": 7,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
       },
       "3": {
         "runs": 100,
         "balls": 100,
         "fours": 5,
+        "sixes": 3,
+        "dots": 50,
+        "dismissals": 4
+      },
+      "4": {
+        "runs": 100,
+        "balls": 100,
+        "fours": 5,
         "sixes": 5,
-        "dots": 40,
-        "dismissals": 5
+        "dots": 50,
+        "dismissals": 4
       }
     },
     "vs_bowler_styles": {
