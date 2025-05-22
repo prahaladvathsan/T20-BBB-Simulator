@@ -5,6 +5,7 @@ This module defines the Match class for detailed match simulation.
 
 import random
 import numpy as np
+import datetime
 from typing import Dict, List, Tuple, Any, Optional
 
 
@@ -13,7 +14,7 @@ class Match:
     Match class with detailed simulation logic for T20 cricket matches.
     """
     
-    def __init__(self, team1, team2, venue_stats=None):
+    def __init__(self, team1, team2, venue_stats=None, match_id=None, venue_id=None, match_date=None):
         """
         Initialize a cricket match between two teams.
         
@@ -21,6 +22,9 @@ class Match:
             team1: First Team object
             team2: Second Team object
             venue_stats: Optional venue statistics
+            match_id: Optional custom match ID
+            venue_id: Optional venue ID
+            match_date: Optional match date
         """
         self.team1 = team1
         self.team2 = team2
@@ -34,6 +38,9 @@ class Match:
         self.current_innings = 0
         self.match_completed = False
         self.winner = None
+        self.match_id = match_id if match_id is not None else f"match{id(self)}"
+        self.match_date = match_date if match_date is not None else datetime.datetime.now().strftime('%Y-%m-%d')
+        self.venue_id = venue_id if venue_id is not None else "venue1"
         
         # Innings data
         self.innings_data = {
@@ -49,6 +56,9 @@ class Match:
         
         # Win probability progression
         self.win_probability = []
+        
+        # Ball-by-ball data
+        self.bbb_data = []
     
     def _create_empty_innings(self) -> Dict:
         """
@@ -99,14 +109,15 @@ class Match:
         })
         
         # 2. Set up batting orders and bowling plans
-        self.batting_first.create_batting_order(opponent=self.bowling_first, venue_stats=self.venue_stats)
-        self.bowling_first.create_bowling_rotation(opponent=self.batting_first, venue_stats=self.venue_stats)
+        #self.batting_first.create_batting_order(opponent=self.bowling_first, venue_stats=self.venue_stats)
+        #self.bowling_first.create_bowling_rotation(opponent=self.batting_first, venue_stats=self.venue_stats)
         
         # 3. Simulate first innings
         self.current_innings = 1
         self.innings_data[1]['batting_team'] = self.batting_first
         self.innings_data[1]['bowling_team'] = self.bowling_first
-        self.innings_data[1]['batting_order'] = self.batting_first.batting_order.copy()
+        self.innings_data[1]['batting_order'] = self.batting_first.optimal_batting_order.copy()
+        print(self.innings_data[1]['batting_order'])
         first_innings_result = self.simulate_innings()
         
         # Log innings completion
@@ -120,15 +131,15 @@ class Match:
         })
         
         # Switch batting/bowling teams
-        self.bowling_first.create_batting_order(opponent=self.batting_first, venue_stats=self.venue_stats)
-        self.batting_first.create_bowling_rotation(opponent=self.bowling_first, venue_stats=self.venue_stats)
+        #self.bowling_first.create_batting_order(opponent=self.batting_first, venue_stats=self.venue_stats)
+        #self.batting_first.create_bowling_rotation(opponent=self.bowling_first, venue_stats=self.venue_stats)
         
         # 4. Simulate second innings
         self.current_innings = 2
         self.innings_data[2]['batting_team'] = self.bowling_first
         self.innings_data[2]['bowling_team'] = self.batting_first
-        self.innings_data[2]['batting_order'] = self.bowling_first.batting_order.copy()
-        
+        self.innings_data[2]['batting_order'] = self.bowling_first.optimal_batting_order.copy()
+        print(self.innings_data[2]['batting_order'])
         # Set target
         target = self.innings_data[1]['score'] + 1
         self.innings_data[2]['target'] = target
@@ -206,6 +217,7 @@ class Match:
         innings_data = self.innings_data[self.current_innings]
         batting_team = innings_data['batting_team']
         bowling_team = innings_data['bowling_team']
+
         
         # Initialize batsmen - first two in the batting order
         if len(innings_data['batting_order']) >= 2:
@@ -228,6 +240,7 @@ class Match:
         
         # Simulate each over
         for over in range(1, 21):
+            # print(f"Simulating over {over}")
             # Check if innings is already over (all out or target reached)
             if innings_data['wickets'] >= 10 or (target and innings_data['score'] >= target):
                 break
@@ -256,13 +269,23 @@ class Match:
             
             # Simulate each ball in the over
             for ball in range(1, 7):
+                #print(f"Simulating ball {ball}")
                 # Check if innings is already over
                 if innings_data['wickets'] >= 10 or (target and innings_data['score'] >= target):
                     break
                 
+                # Check if we have batsmen
+                if not innings_data['current_batsmen']:
+                    # No batsmen left, innings is over
+                    break
+                # Debug statements
+                print(over,ball)
+                print(innings_data['current_batsmen'])
                 # Get current batsmen and bowler objects
                 striker_id = innings_data['current_batsmen'][0]
+                non_striker_id = innings_data['current_batsmen'][1] if len(innings_data['current_batsmen']) > 1 else None
                 striker = batting_team.players[striker_id]
+                non_striker = batting_team.players[non_striker_id] if non_striker_id else None
                 bowler = bowling_team.players[bowler_id]
                 
                 # Update match state for ball simulation
@@ -274,6 +297,31 @@ class Match:
                 
                 # Process the outcome
                 ball_runs, is_wicket, is_extra, extras_type = self._process_ball_outcome(outcome, innings_data)
+                
+                # Create a string representation of the outcome for BBB data
+                outcome_str = self._get_outcome_string(ball_runs, is_wicket, is_extra, extras_type)
+                
+                # Record BBB data
+                bbb_record = {
+                    'match_id': self.match_id,
+                    'match_date': self.match_date,
+                    'venue_id': self.venue_id,
+                    'innings': self.current_innings,
+                    'over': over,
+                    'ball': ball,
+                    'batting_team': batting_team.id,
+                    'bowling_team': bowling_team.id,
+                    'striker': striker_id,
+                    'non_striker': non_striker_id if non_striker_id else "",
+                    'bowler': bowler_id,
+                    'runs': ball_runs,
+                    'is_wicket': 1 if is_wicket else 0,
+                    'outcome': outcome_str,
+                    'line': '',  # Could be enhanced in future
+                    'length': '',  # Could be enhanced in future
+                    'phase': current_phase
+                }
+                self.bbb_data.append(bbb_record)
                 
                 # Update innings statistics
                 innings_data['score'] += ball_runs
@@ -309,40 +357,58 @@ class Match:
                         }
                     else:
                         # No more batsmen, innings is over
+                        innings_data['current_batsmen'] = []
                         break
                 
-                if not is_extra:  # Regular delivery
-                    innings_data['balls'] += 1
+                # If it's not an extra, update batting and bowling stats
+                if not is_extra:
+                    # Add to overs and balls counts
+                    if innings_data['balls'] == 5:
+                        innings_data['overs'] += 1
+                        innings_data['balls'] = 0
+                    else:
+                        innings_data['balls'] += 1
+                    
                     over_balls += 1
                     
-                    # Update batsman's stats
-                    innings_data['batsmen_stats'][striker_id]['balls'] += 1
-                    if ball_runs > 0:
+                    # Update batsman stats
+                    if striker_id in innings_data['batsmen_stats']:
+                        innings_data['batsmen_stats'][striker_id]['balls'] += 1
                         innings_data['batsmen_stats'][striker_id]['runs'] += ball_runs
-                        if ball_runs == 4:
+                        
+                        if ball_runs == 0:
+                            innings_data['batsmen_stats'][striker_id]['dots'] += 1
+                        elif ball_runs == 4:
                             innings_data['batsmen_stats'][striker_id]['fours'] += 1
                         elif ball_runs == 6:
                             innings_data['batsmen_stats'][striker_id]['sixes'] += 1
-                    else:
-                        innings_data['batsmen_stats'][striker_id]['dots'] += 1
+                        
+                        # Update strike rate
+                        total_runs = innings_data['batsmen_stats'][striker_id]['runs']
+                        total_balls = innings_data['batsmen_stats'][striker_id]['balls']
+                        if total_balls > 0:
+                            innings_data['batsmen_stats'][striker_id]['strike_rate'] = (total_runs / total_balls) * 100
                     
-                    # Update strike rate
-                    balls = innings_data['batsmen_stats'][striker_id]['balls']
-                    runs = innings_data['batsmen_stats'][striker_id]['runs']
-                    innings_data['batsmen_stats'][striker_id]['strike_rate'] = (runs / balls) * 100 if balls > 0 else 0
+                    # Update bowler stats
+                    if bowler_id in innings_data['bowler_stats']:
+                        innings_data['bowler_stats'][bowler_id]['balls'] += 1
+                        innings_data['bowler_stats'][bowler_id]['runs'] += ball_runs
+                        
+                        # Update overs
+                        bowler_balls = innings_data['bowler_stats'][bowler_id]['balls']
+                        innings_data['bowler_stats'][bowler_id]['overs'] = bowler_balls // 6
+                        
+                        # Add wicket if applicable
+                        if is_wicket:
+                            innings_data['bowler_stats'][bowler_id]['wickets'] += 1
+                        
+                        # Update economy rate
+                        total_balls = innings_data['bowler_stats'][bowler_id]['balls']
+                        total_runs = innings_data['bowler_stats'][bowler_id]['runs']
+                        if total_balls > 0:
+                            innings_data['bowler_stats'][bowler_id]['economy'] = (total_runs / total_balls) * 6
                     
-                    # Update bowler's stats
-                    innings_data['bowler_stats'][bowler_id]['balls'] += 1
-                    innings_data['bowler_stats'][bowler_id]['runs'] += ball_runs
-                    if is_wicket:
-                        innings_data['bowler_stats'][bowler_id]['wickets'] += 1
-                    
-                    # Update economy rate
-                    bowler_balls = innings_data['bowler_stats'][bowler_id]['balls']
-                    bowler_runs = innings_data['bowler_stats'][bowler_id]['runs']
-                    innings_data['bowler_stats'][bowler_id]['economy'] = (bowler_runs / bowler_balls) * 6 if bowler_balls > 0 else 0
-                    
-                    # Update partnership
+                    # Update partnership stats
                     innings_data['current_partnership']['runs'] += ball_runs
                     innings_data['current_partnership']['balls'] += 1
                     
@@ -389,35 +455,39 @@ class Match:
                 # Check for key moments
                 self._check_for_key_moment(over, ball, innings_data, ball_runs, is_wicket)
             
-            # End of over - rotate strike
-            innings_data['current_batsmen'].reverse()
-            
-            # Update overs count
-            innings_data['overs'] += 1
-            
-            # Check if it was a maiden over
-            if over_runs == 0 and over_balls == 6:
-                innings_data['bowler_stats'][bowler_id]['maidens'] += 1
-            
-            # Update bowler's over count
-            innings_data['bowler_stats'][bowler_id]['overs'] += over_balls / 6
-            
-            # Store over history
-            innings_data['over_history'][over] = {
-                'runs': over_runs,
-                'wickets': over_wickets,
-                'extras': over_extras,
-                'bowler': bowler_id
-            }
-            
-            # Update team strategies based on match situation
-            batting_team.adjust_strategy(self._get_current_match_state(is_batting=True))
-            bowling_team.adjust_strategy(self._get_current_match_state(is_batting=False))
+            # End of over processing
+            if over_balls > 0:  # Only process if any legal deliveries were bowled
+                # Update over history
+                innings_data['over_history'][over] = {
+                    'runs': over_runs,
+                    'wickets': over_wickets,
+                    'extras': over_extras,
+                    'balls': over_balls
+                }
+                
+                # Check for maiden over
+                if over_runs == 0 and over_balls == 6:
+                    innings_data['bowler_stats'][bowler_id]['maidens'] += 1
+                
+                # Rotate strike at end of over
+                if len(innings_data['current_batsmen']) >= 2:
+                    innings_data['current_batsmen'].reverse()
         
-        # End of innings
+        # Return innings data
         return innings_data
-    
+
+    def _get_outcome_string(self, runs, is_wicket, is_extra, extras_type):
+        """Convert ball outcome to string representation for BBB data."""
+        if is_wicket:
+            return "wicket"
+        if is_extra:
+            return extras_type
+        if runs == 0:
+            return "dot"
+        return str(runs)
+        
     def _simulate_ball(self, batsman, bowler, phase, match_state):
+        #print(f"Simulating ball for {batsman.name} vs {bowler.name} in phase {phase}")
         """
         Simulate the outcome of a single ball.
         
@@ -450,8 +520,9 @@ class Match:
         total_prob = sum(probabilities)
         normalized_probs = [p/total_prob for p in probabilities]
         
-        # Select outcome based on probabilities
-        return random.choices(outcomes, weights=normalized_probs, k=1)[0]
+        final_outcome = random.choices(outcomes, weights=normalized_probs, k=1)[0]
+        #print(f"Final outcome: {final_outcome}")
+        return final_outcome
     
     def _process_ball_outcome(self, outcome, innings_data):
         """
@@ -776,7 +847,7 @@ class Match:
             Dictionary with detailed match results
         """
         results = {
-            'match_id': id(self),
+            'match_id': self.match_id,
             'teams': {
                 'team1': self.team1.name,
                 'team2': self.team2.name
@@ -808,9 +879,8 @@ class Match:
             'player_stats': {
                 'batting': self._get_batting_stats(),
                 'bowling': self._get_bowling_stats()
-            }#,
-            #'key_moments': self.key_moments,
-            #'win_probability': self.win_probability
+            },
+            'bbb_data': self.bbb_data  # Include ball-by-ball data in results
         }
         
         return results

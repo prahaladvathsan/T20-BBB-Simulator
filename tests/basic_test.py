@@ -75,16 +75,37 @@ class BasicSimulatorTest(unittest.TestCase):
                 "total_runs": 500 + (i * 50),
                 "total_balls": 400 + (i * 20),
                 "dismissals": 15,
+                "strike_rate": (500 + (i * 50)) / (400 + (i * 20)) * 100,
+                "average": (500 + (i * 50)) / 15,
                 "by_phase": {
-                    "1": {"runs": 150, "balls": 100, "fours": 8, "sixes": 4, "dots": 50, "dismissals": 3},  # Powerplay (1-6)
-                    "2": {"runs": 150, "balls": 100, "fours": 7, "sixes": 3, "dots": 50, "dismissals": 4},  # Early Middle (7-12)
-                    "3": {"runs": 100, "balls": 100, "fours": 5, "sixes": 3, "dots": 50, "dismissals": 4},  # Late Middle (13-16)
-                    "4": {"runs": 100, "balls": 100, "fours": 5, "sixes": 5, "dots": 50, "dismissals": 4}   # Death (17-20)
+                    "1": {
+                        "runs": 150, "balls": 100, "fours": 8, "sixes": 4, "dots": 50, "dismissals": 3,
+                        "strike_rate": 150.0, "average": 50.0
+                    },  # Powerplay (1-6)
+                    "2": {
+                        "runs": 150, "balls": 100, "fours": 7, "sixes": 3, "dots": 50, "dismissals": 4,
+                        "strike_rate": 150.0, "average": 37.5
+                    },  # Early Middle (7-12)
+                    "3": {
+                        "runs": 100, "balls": 100, "fours": 5, "sixes": 3, "dots": 50, "dismissals": 4,
+                        "strike_rate": 100.0, "average": 25.0
+                    },  # Late Middle (13-16)
+                    "4": {
+                        "runs": 100, "balls": 100, "fours": 5, "sixes": 5, "dots": 50, "dismissals": 4,
+                        "strike_rate": 100.0, "average": 25.0
+                    }   # Death (17-20)
                 },
                 "vs_bowler_styles": {
-                    "fast": {"runs": 250, "balls": 200, "dismissals": 8},
-                    "spin": {"runs": 250, "balls": 200, "dismissals": 7}
-                }
+                    "fast": {
+                        "runs": 250, "balls": 200, "dismissals": 8, "dots": 80,
+                        "fours": 15, "sixes": 5
+                    },
+                    "spin": {
+                        "runs": 250, "balls": 200, "dismissals": 7, "dots": 70,
+                        "fours": 10, "sixes": 10
+                    }
+                },
+                "boundary_percentage": (20 + i) / 100.0  # For testing lower_order_score calculation
             }
         
         # Create simplified bowling stats
@@ -94,18 +115,37 @@ class BasicSimulatorTest(unittest.TestCase):
             bowling_stats[player_id] = {
                 "bowling_style": "fast" if i % 2 == 0 else "spin",
                 "bowler_id": player_id,
-                "runs_conceded": 400 + (i * 20),
-                "balls_bowled": 300 + (i * 10),
+                "runs": 400 + (i * 20),
+                "balls": 300 + (i * 10),
                 "wickets": 15 + (i % 5),
+                "economy": ((400 + (i * 20)) / (300 + (i * 10))) * 6,
                 "by_phase": {
-                    "1": {"runs_conceded": 120, "balls_bowled": 80, "wickets": 3, "dots": 40},  # Powerplay
-                    "2": {"runs_conceded": 100, "balls_bowled": 80, "wickets": 4, "dots": 35},  # Early Middle
-                    "3": {"runs_conceded": 90, "balls_bowled": 70, "wickets": 4, "dots": 30},   # Late Middle  
-                    "4": {"runs_conceded": 90, "balls_bowled": 70, "wickets": 4, "dots": 25}    # Death
+                    "1": {
+                        "runs": 120, "balls": 80, "wickets": 3, "dots": 40,
+                        "fours": 8, "sixes": 2
+                    },  # Powerplay
+                    "2": {
+                        "runs": 100, "balls": 80, "wickets": 4, "dots": 35,
+                        "fours": 5, "sixes": 1
+                    },  # Early Middle
+                    "3": {
+                        "runs": 90, "balls": 70, "wickets": 4, "dots": 30,
+                        "fours": 5, "sixes": 2
+                    },   # Late Middle  
+                    "4": {
+                        "runs": 90, "balls": 70, "wickets": 4, "dots": 25,
+                        "fours": 4, "sixes": 4
+                    }    # Death
                 },
                 "vs_batsman_types": {
-                    "aggressive": {"runs_conceded": 200, "balls_bowled": 150, "wickets": 8},
-                    "anchor": {"runs_conceded": 200, "balls_bowled": 150, "wickets": 7}
+                    "aggressive": {
+                        "runs": 200, "balls": 150, "wickets": 8,
+                        "dots": 50, "fours": 12, "sixes": 7
+                    },
+                    "anchor": {
+                        "runs": 200, "balls": 150, "wickets": 7,
+                        "dots": 60, "fours": 8, "sixes": 4
+                    }
                 }
             }
         
@@ -430,6 +470,7 @@ class BasicSimulatorTest(unittest.TestCase):
         
         # Test batting order creation
         batting_order = team.create_batting_order()
+        print(f"Batting order: {batting_order}")
         self.assertIsNotNone(batting_order)
         self.assertGreaterEqual(len(batting_order), 3)
         
@@ -500,8 +541,170 @@ class BasicSimulatorTest(unittest.TestCase):
         self.assertIn('winner', match_results['result'])
         self.assertIn('margin', match_results['result'])
 
-        print("Match Results:")
-        print(json.dumps(match_results, indent=2))
+        # Display a nicely formatted cricket scorecard
+        self._display_match_scorecard(match_results)
+    
+    def _display_match_scorecard(self, match_results):
+        """Display match results in a nicely formatted cricket scorecard."""
+        print("\n" + "="*80)
+        print(f"{'TEST MATCH SCORECARD':^80}")
+        print("="*80)
+        
+        # Match result summary
+        winner = match_results['result'].get('winner', 'Unknown')
+        margin = match_results['result'].get('margin', 0)
+        margin_type = match_results['result'].get('margin_type', 'runs')
+        
+        print(f"\nRESULT: {winner} won by {margin} {margin_type}")
+        print("-"*80)
+        
+        # Display both innings
+        for innings_num in [1, 2]:
+            if innings_num not in match_results['innings']:
+                print(f"\nInnings {innings_num} data not found")
+                continue
+                
+            innings = match_results['innings'][innings_num]
+            batting_team = innings.get('batting_team', f"Team {innings_num}")
+            score = innings.get('score', 0)
+            wickets = innings.get('wickets', 0)
+            overs = innings.get('overs', 20)
+            
+            # Format overs display
+            overs_str = str(overs)
+            if isinstance(overs, str) and '.' in overs:
+                # Already in the right format
+                pass
+            elif isinstance(overs, (int, float)):
+                # Convert to proper cricket notation (e.g., 20.5 is 20 overs and 5 balls)
+                if isinstance(overs, float):
+                    overs_int = int(overs)
+                    balls = int(round((overs - overs_int) * 6))
+                    overs_str = f"{overs_int}.{balls}"
+            
+            print(f"\n{batting_team} INNINGS: {score}/{wickets} ({overs_str} overs)")
+            print("-"*80)
+            
+            # Display batsmen performances
+            print(f"{'BATSMAN':<25} {'STATUS':<15} {'RUNS':<8} {'BALLS':<8} {'4s':<5} {'6s':<5} {'SR':<8}")
+            print("-"*80)
+            
+            # Get batting performances for this innings
+            batsmen = []
+            if 'player_stats' in match_results and 'batting' in match_results['player_stats']:
+                for player_id, stats in match_results['player_stats']['batting'].items():
+                    # Check if this player batted in this innings
+                    if stats.get('innings') == innings_num:
+                        batsmen.append({
+                            'player_id': player_id,
+                            'name': stats.get('name', player_id),
+                            'runs': stats.get('runs', 0),
+                            'balls': stats.get('balls', 0),
+                            'fours': stats.get('fours', 0),
+                            'sixes': stats.get('sixes', 0),
+                            'dismissed': stats.get('dismissed', False),
+                            'batting_position': stats.get('position', 999)
+                        })
+            
+            if not batsmen:
+                print("No batting data available")
+            else:
+                # Sort by batting position
+                batsmen.sort(key=lambda x: x.get('batting_position', 999))
+                
+                for batsman in batsmen:
+                    name = batsman.get('name', batsman['player_id'])
+                    status = "not out" if not batsman.get('dismissed', False) else "out"
+                    runs = batsman.get('runs', 0)
+                    balls = batsman.get('balls', 0)
+                    fours = batsman.get('fours', 0)
+                    sixes = batsman.get('sixes', 0)
+                    sr = round((runs / balls * 100) if balls > 0 else 0, 2)
+                    
+                    print(f"{name:<25} {status:<15} {runs:<8} {balls:<8} {fours:<5} {sixes:<5} {sr:<8}")
+            
+            print("-"*80)
+            
+            # Display extras and total
+            extras = innings.get('extras', 0)
+            wides = innings.get('wides', 0)
+            no_balls = innings.get('no_balls', 0) 
+            byes = innings.get('byes', 0)
+            leg_byes = innings.get('leg_byes', 0)
+            print(f"Extras: {extras} (WD: {wides}, NB: {no_balls}, B: {byes}, LB: {leg_byes})")
+            print(f"TOTAL: {score}/{wickets} in {overs_str} overs")
+            print("-"*80)
+            
+            # Display bowling performances
+            bowling_team = innings.get('bowling_team', '')
+            if not bowling_team:
+                # Determine bowling team from match_results
+                team1 = match_results['teams'].get('team1', '')
+                team2 = match_results['teams'].get('team2', '')
+                bowling_team = team2 if batting_team == team1 else team1
+                    
+            print(f"\n{bowling_team} BOWLING:")
+            print(f"{'BOWLER':<25} {'O':<5} {'M':<5} {'R':<5} {'W':<5} {'ECON':<8}")
+            print("-"*80)
+            
+            # Get bowling performances for this innings
+            bowlers = []
+            if 'player_stats' in match_results and 'bowling' in match_results['player_stats']:
+                for player_id, stats in match_results['player_stats']['bowling'].items():
+                    # Check if this player bowled in this innings
+                    if stats.get('innings') == innings_num:
+                        bowlers.append({
+                            'player_id': player_id,
+                            'name': stats.get('name', player_id),
+                            'overs': stats.get('overs', 0),
+                            'balls': stats.get('balls', 0),
+                            'runs': stats.get('runs', 0),
+                            'wickets': stats.get('wickets', 0),
+                            'maidens': stats.get('maidens', 0)
+                        })
+            
+            if not bowlers:
+                print("No bowling data available")
+            else:
+                # Sort by number of overs bowled (most first)
+                bowlers.sort(key=lambda x: (x.get('overs', 0), x.get('balls', 0)), reverse=True)
+                
+                for bowler in bowlers:
+                    name = bowler.get('name', bowler['player_id'])
+                    
+                    # Get bowling stats
+                    overs = bowler.get('overs', 0)
+                    balls = bowler.get('balls', 0)
+                    
+                    # Format overs (convert balls to overs if needed)
+                    if isinstance(overs, (int, float)) and overs > 0:
+                        # Convert to proper cricket notation
+                        if isinstance(overs, float):
+                            overs_int = int(overs)
+                            balls_part = int(round((overs - overs_int) * 6))
+                            overs_str = f"{overs_int}.{balls_part}"
+                        else:
+                            overs_str = f"{overs}.0"
+                    else:
+                        # Calculate from balls
+                        overs_int = balls // 6
+                        remainder = balls % 6
+                        overs_str = f"{overs_int}.{remainder}"
+                        
+                    runs = bowler.get('runs', 0)
+                    wickets = bowler.get('wickets', 0)
+                    maidens = bowler.get('maidens', 0)
+                    
+                    # Calculate economy rate
+                    if isinstance(overs, (int, float)) and overs > 0:
+                        econ = round(runs / overs, 2)
+                    else:
+                        # Calculate from balls
+                        econ = round((runs / (balls/6)) if balls > 0 else 0, 2)
+                    
+                    print(f"{name:<25} {overs_str:<5} {maidens:<5} {runs:<5} {wickets:<5} {econ:<8}")
+            
+            print("="*80)
     
     def test_simulation_engine(self):
         """Test the SimulationEngine."""

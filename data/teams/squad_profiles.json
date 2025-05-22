@@ -1,92 +1,1207 @@
 {
-    "team1": {
-        "name": "Sample Team 1",
-        "players": [
-            {
-                "player_id": "p1",
-                "name": "Player 1",
-                "main_role": "batsman",
-                "specific_roles": [
-                    "opener"
-                ]
-            },
-            {
-                "player_id": "p2",
-                "name": "Player 2",
-                "main_role": "batsman",
-                "specific_roles": [
-                    "middle-order"
-                ]
-            },
-            {
-                "player_id": "p3",
-                "name": "Player 3",
-                "main_role": "all-rounder",
-                "specific_roles": [
-                    "finisher"
-                ]
-            },
-            {
-                "player_id": "p4",
-                "name": "Player 4",
-                "main_role": "bowler",
-                "specific_roles": [
-                    "powerplay-specialist"
-                ]
-            },
-            {
-                "player_id": "p5",
-                "name": "Player 5",
-                "main_role": "bowler",
-                "specific_roles": [
-                    "death-specialist"
-                ]
-            }
-        ]
-    },
-    "team2": {
-        "name": "Sample Team 2",
-        "players": [
-            {
-                "player_id": "p6",
-                "name": "Player 6",
-                "main_role": "batsman",
-                "specific_roles": [
-                    "opener"
-                ]
-            },
-            {
-                "player_id": "p7",
-                "name": "Player 7",
-                "main_role": "batsman",
-                "specific_roles": [
-                    "middle-order"
-                ]
-            },
-            {
-                "player_id": "p8",
-                "name": "Player 8",
-                "main_role": "all-rounder",
-                "specific_roles": [
-                    "finisher"
-                ]
-            },
-            {
-                "player_id": "p9",
-                "name": "Player 9",
-                "main_role": "bowler",
-                "specific_roles": [
-                    "powerplay-specialist"
-                ]
-            },
-            {
-                "player_id": "p10",
-                "name": "Player 10",
-                "main_role": "bowler",
-                "specific_roles": [
-                    "death-specialist"
-                ]
-            }
-        ]
-    }
+  "CSK": {
+    "team_name": "Chennai Super Kings",
+    "edition": "2024",
+    "players": [
+      {
+        "player_id": 28081,
+        "name": "MS Dhoni",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 1070665,
+        "name": "Dewald Brevis",
+        "role": "Batter"
+      },
+      {
+        "player_id": 379140,
+        "name": "Devon Conway",
+        "role": "Batter"
+      },
+      {
+        "player_id": 446763,
+        "name": "Rahul Tripathi",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1292497,
+        "name": "Shaik Rasheed",
+        "role": "Batter"
+      },
+      {
+        "player_id": 425786,
+        "name": "Ankush Bedi",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 230556,
+        "name": "Andre McCarthy",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1452455,
+        "name": "Ayush Mhatre",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1131570,
+        "name": "Urvil Patel",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 959767,
+        "name": "Rachin Ravindra",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 26421,
+        "name": "Ravichandran Ashwin",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 477021,
+        "name": "Vijay Shankar",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 662973,
+        "name": "Sam Curran",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1175428,
+        "name": "Anshul Kamboj",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 497121,
+        "name": "Deepak Hooda",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 510530,
+        "name": "Jamie Overton",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1070188,
+        "name": "Kamlesh Nagarkoti",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 269238,
+        "name": "Taposh Ghosh",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 234675,
+        "name": "Ravindra Jadeja",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 714451,
+        "name": "Shivam Dube",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 942645,
+        "name": "Khaleel Ahmed",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1182529,
+        "name": "Noor Ahmad",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1125688,
+        "name": "Mukesh Choudhary",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 826915,
+        "name": "Nathan Ellis",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 344580,
+        "name": "Shreyas Gopal",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1194795,
+        "name": "Matheesha Pathirana",
+        "role": "Bowler"
+      }
+    ]
+  },
+  "DC": {
+    "team_name": "Delhi Capitals",
+    "edition": "2024",
+    "players": [
+      {
+        "player_id": 422108,
+        "name": "KL Rahul",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 1168049,
+        "name": "Jake Fraser-McGurk",
+        "role": "Batter"
+      },
+      {
+        "player_id": 398439,
+        "name": "Karun Nair",
+        "role": "Batter"
+      },
+      {
+        "player_id": 44828,
+        "name": "Faf du Plessis",
+        "role": "Batter"
+      },
+      {
+        "player_id": 698315,
+        "name": "Donovan Ferreira",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 1277545,
+        "name": "Abishek Porel",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 595978,
+        "name": "Tristan Stubbs",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 554691,
+        "name": "Axar Patel",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1175489,
+        "name": "Sameer Rizvi",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1131978,
+        "name": "Ashutosh Sharma",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1111917,
+        "name": "Darshan Nalkande",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1449074,
+        "name": "Vipraj Nigam",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1059570,
+        "name": "Ajay Mandal",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 481046,
+        "name": "Prasanth Kumar",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1292527,
+        "name": "Tripurana Vijay",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1082752,
+        "name": "Gaurav Tiwari",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 311592,
+        "name": "Mitchell Starc",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 802575,
+        "name": "T Natarajan",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 537119,
+        "name": "Mohit Sharma",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 926851,
+        "name": "Mukesh Kumar",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 552152,
+        "name": "Dushmantha Chameera",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 559235,
+        "name": "Kuldeep Yadav",
+        "role": "Bowler"
+      }
+    ]
+  },
+  "GT": {
+    "team_name": "Gujarat Titans",
+    "edition": "2024",
+    "players": [
+      {
+        "player_id": 1070173,
+        "name": "Shubman Gill",
+        "role": "Batter"
+      },
+      {
+        "player_id": 308967,
+        "name": "Jos Buttler",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 1207295,
+        "name": "Kumar Kushagra",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 1123073,
+        "name": "Anuj Rawat",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 914541,
+        "name": "Sherfane Rutherford",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1292506,
+        "name": "Nishant Sindhu",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 853265,
+        "name": "Mahipal Lomror",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 719715,
+        "name": "Washington Sundar",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1244751,
+        "name": "Arshad Khan",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1048739,
+        "name": "Sai Kishore",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 447587,
+        "name": "Jayant Yadav",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 793467,
+        "name": "Karim Janat",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1151288,
+        "name": "Sai Sudharsan",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 437316,
+        "name": "Dasun Shanaka",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 719719,
+        "name": "M Shahrukh Khan",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 550215,
+        "name": "Kagiso Rabada",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 940973,
+        "name": "Mohammed Siraj",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 917159,
+        "name": "Prasidh Krishna",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1175426,
+        "name": "Manav Suthar",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 596010,
+        "name": "Gerald Coetzee",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1287033,
+        "name": "Gurnoor Brar",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 236779,
+        "name": "Ishant Sharma",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1083033,
+        "name": "Kulwant Khejroliya",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 423838,
+        "name": "Rahul Tewatia",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 793463,
+        "name": "Rashid Khan",
+        "role": "Bowler"
+      }
+    ]
+  },
+  "KKR": {
+    "team_name": "Kolkata Knight Riders",
+    "edition": "2024",
+    "players": [
+      {
+        "player_id": 277916,
+        "name": "Ajinkya Rahane",
+        "role": "Batter"
+      },
+      {
+        "player_id": 723105,
+        "name": "Rinku Singh",
+        "role": "Batter"
+      },
+      {
+        "player_id": 379143,
+        "name": "Quinton de Kock",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 974087,
+        "name": "Rahmanullah Gurbaz",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 1292495,
+        "name": "Angkrish Raghuvanshi",
+        "role": "Batter"
+      },
+      {
+        "player_id": 820351,
+        "name": "Rovman Powell",
+        "role": "Batter"
+      },
+      {
+        "player_id": 290630,
+        "name": "Manish Pandey",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1155253,
+        "name": "Luvnith Sisodia",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 851403,
+        "name": "Venkatesh Iyer",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1079839,
+        "name": "Anukul Roy",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 8917,
+        "name": "Moeen Ali",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1079470,
+        "name": "Ramandeep Singh",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 276298,
+        "name": "Andre Russell",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 481979,
+        "name": "Anrich Nortje",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1209292,
+        "name": "Vaibhav Arora",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1081442,
+        "name": "Mayank Markande",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1123718,
+        "name": "Spencer Johnson",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1312645,
+        "name": "Harshit Rana",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 230558,
+        "name": "Sunil Narine",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1108375,
+        "name": "Varun Chakravarthy",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1131754,
+        "name": "Chetan Sakariya",
+        "role": "Bowler"
+      }
+    ]
+  },
+  "LSG": {
+    "team_name": "Lucknow Super Giants",
+    "edition": "2024",
+    "players": [
+      {
+        "player_id": 931581,
+        "name": "Rishabh Pant",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 321777,
+        "name": "David Miller",
+        "role": "Batter"
+      },
+      {
+        "player_id": 600498,
+        "name": "Aiden Markram",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1130300,
+        "name": "Aryan Juyal",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 805235,
+        "name": "Himmat Singh",
+        "role": "Batter"
+      },
+      {
+        "player_id": 595267,
+        "name": "Matthew Breetzke",
+        "role": "Batter"
+      },
+      {
+        "player_id": 604302,
+        "name": "Nicholas Pooran",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 272450,
+        "name": "Mitchell Marsh",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1175485,
+        "name": "Abdul Samad",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1159711,
+        "name": "Shahbaz Ahmed",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1339708,
+        "name": "Gaurav Chaudhary",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1175429,
+        "name": "Rajvardhan Hangargekar",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1403153,
+        "name": "Arshin Kulkarni",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1151270,
+        "name": "Ayush Badoni",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 475281,
+        "name": "Shardul Thakur",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 694211,
+        "name": "Avesh Khan",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1176959,
+        "name": "Akash Deep",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1151286,
+        "name": "Manimaran Siddharth",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1460529,
+        "name": "Digvesh Rathi",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1175458,
+        "name": "Akash Singh",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1356971,
+        "name": "Shamar Joseph",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1350768,
+        "name": "Prince Yadav",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1292563,
+        "name": "Mayank Yadav",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1175441,
+        "name": "Ravi Bishnoi",
+        "role": "Bowler"
+      }
+    ]
+  },
+  "MI": {
+    "team_name": "Mumbai Indians",
+    "edition": "2024",
+    "players": [
+      {
+        "player_id": 34102,
+        "name": "Rohit Sharma",
+        "role": "Batter"
+      },
+      {
+        "player_id": 446507,
+        "name": "Suryakumar Yadav",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1350762,
+        "name": "Robin Minz",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 605661,
+        "name": "Ryan Rickelton",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 778241,
+        "name": "Krishnan Shrijith",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 1410577,
+        "name": "Bevon Jacobs",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1170265,
+        "name": "Tilak Varma",
+        "role": "Batter"
+      },
+      {
+        "player_id": 625371,
+        "name": "Hardik Pandya",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1287032,
+        "name": "Naman Dhir",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 897549,
+        "name": "Will Jacks",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 502714,
+        "name": "Mitchell Santner",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1292502,
+        "name": "Raj\u00a0Bawa",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 594322,
+        "name": "Corbin Bosch",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 277912,
+        "name": "Trent Boult",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 30288,
+        "name": "Karn Sharma",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 447261,
+        "name": "Deepak Chahar",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1209126,
+        "name": "Ashwani Kumar",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 461632,
+        "name": "Reece Topley",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1392201,
+        "name": "Satyanarayana Raju",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1148776,
+        "name": "Arjun Tendulkar",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1058214,
+        "name": "Mujeeb-ur-Rehman",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1122621,
+        "name": "Raghu Sharma",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 625383,
+        "name": "Jasprit Bumrah",
+        "role": "Bowler"
+      }
+    ]
+  },
+  "PBKS": {
+    "team_name": "Punjab Kings",
+    "edition": "2024",
+    "players": [
+      {
+        "player_id": 642519,
+        "name": "Shreyas Iyer",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1151273,
+        "name": "Nehal Wadhera",
+        "role": "Batter"
+      },
+      {
+        "player_id": 732293,
+        "name": "Vishnu Vinod",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 662235,
+        "name": "Josh Inglis",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 1364155,
+        "name": "Haroon Khan",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1324449,
+        "name": "Pyla Avinash",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1161024,
+        "name": "Prabhsimran Singh",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 377534,
+        "name": "Shashank Singh",
+        "role": "Batter"
+      },
+      {
+        "player_id": 325012,
+        "name": "Marcus Stoinis",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1168641,
+        "name": "Harpreet Brar",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 696401,
+        "name": "Marco Jansen",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 819429,
+        "name": "Azmatullah Omarzai",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1175456,
+        "name": "Priyansh Arya",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1124283,
+        "name": "Aaron Hardie",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 30102,
+        "name": "Zaheer Khan",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1339698,
+        "name": "Suryansh Shedge",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1213979,
+        "name": "Mitchell Owen",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1125976,
+        "name": "Arshdeep Singh",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 430246,
+        "name": "Yuzvendra Chahal",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 777815,
+        "name": "Vijaykumar Vyshak",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1070196,
+        "name": "Yash Thakur",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 493773,
+        "name": "Lockie Ferguson",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1163695,
+        "name": "Kuldeep Sen",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1050545,
+        "name": "Xavier Bartlett",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 777515,
+        "name": "Praveen Dubey",
+        "role": "Bowler"
+      }
+    ]
+  },
+  "RR": {
+    "team_name": "Rajasthan Royals",
+    "edition": "2024",
+    "players": [
+      {
+        "player_id": 425943,
+        "name": "Sanju Samson",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 1252585,
+        "name": "Shubham Dubey",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1408688,
+        "name": "Vaibhav Suryavanshi",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1339031,
+        "name": "Kunal Singh Rathore",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 670025,
+        "name": "Shimron Hetmyer",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1151278,
+        "name": "Yashasvi Jaiswal",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1175488,
+        "name": "Dhruv Jurel",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 1079434,
+        "name": "Riyan Parag",
+        "role": "Batter"
+      },
+      {
+        "player_id": 604527,
+        "name": "Nitish Rana",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1206052,
+        "name": "Yudhvir Singh",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 669855,
+        "name": "Jofra Archer",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1138316,
+        "name": "Maheesh Theekshana",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 784379,
+        "name": "Wanindu Hasaranga",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1206039,
+        "name": "Akash Madhwal",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1159843,
+        "name": "Kumar Kartikeya",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 822553,
+        "name": "Tushar Deshpande",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 974175,
+        "name": "Fazalhaq Farooqi",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1294342,
+        "name": "Kwena Maphaka",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1131978,
+        "name": "Ashutosh Sharma",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 438362,
+        "name": "Sandeep Sharma",
+        "role": "Bowler"
+      }
+    ]
+  },
+  "RCB": {
+    "team_name": "Royal Challengers Bengaluru",
+    "edition": "2024",
+    "players": [
+      {
+        "player_id": 823703,
+        "name": "Rajat Patidar",
+        "role": "Batter"
+      },
+      {
+        "player_id": 253802,
+        "name": "Virat Kohli",
+        "role": "Batter"
+      },
+      {
+        "player_id": 669365,
+        "name": "Phil Salt",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 721867,
+        "name": "Jitesh Sharma",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 1119026,
+        "name": "Devdutt Padikkal",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1167965,
+        "name": "Shivalik Sharma",
+        "role": "Batter"
+      },
+      {
+        "player_id": 403902,
+        "name": "Liam Livingstone",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 471342,
+        "name": "Krunal Pandya",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 232292,
+        "name": "Swapnil Singh",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 892749,
+        "name": "Tim David",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 677077,
+        "name": "Romario Shepherd",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1057399,
+        "name": "Manoj Bhandage",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1194959,
+        "name": "Jacob Bethell",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 288284,
+        "name": "Josh Hazlewood",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 822673,
+        "name": "Pratik Das",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1350792,
+        "name": "Suyash Sharma",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 326016,
+        "name": "Bhuvneshwar Kumar",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 955235,
+        "name": "Nuwan Thushara",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 542023,
+        "name": "Lungi Ngidi",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 423842,
+        "name": "Anand Singh",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1349361,
+        "name": "Mohit Rathee",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1159720,
+        "name": "Yash Dayal",
+        "role": "Bowler"
+      }
+    ]
+  },
+  "SRH": {
+    "team_name": "Sunrisers Hyderabad",
+    "edition": "2024",
+    "players": [
+      {
+        "player_id": 720471,
+        "name": "Ishan Kishan",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 1125958,
+        "name": "Atharva Taide",
+        "role": "Batter"
+      },
+      {
+        "player_id": 778963,
+        "name": "Abhinav Manohar",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1409976,
+        "name": "Aniket Verma",
+        "role": "Batter"
+      },
+      {
+        "player_id": 432783,
+        "name": "Sachin Baby",
+        "role": "Batter"
+      },
+      {
+        "player_id": 1338607,
+        "name": "Sabaorish Ravichandran",
+        "role": "Batter"
+      },
+      {
+        "player_id": 436757,
+        "name": "Heinrich Klaasen",
+        "role": "WK-Batter"
+      },
+      {
+        "player_id": 530011,
+        "name": "Travis Head",
+        "role": "Batter"
+      },
+      {
+        "player_id": 390481,
+        "name": "Harshal Patel",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 784373,
+        "name": "Kamindu Mendis",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 698189,
+        "name": "Wiaan Mulder",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1216159,
+        "name": "Harsh Dubey",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1070183,
+        "name": "Abhishek Sharma",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 1175496,
+        "name": "Nitish Kumar Reddy",
+        "role": "All-Rounder"
+      },
+      {
+        "player_id": 489889,
+        "name": "Pat Cummins",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 481896,
+        "name": "Mohammed Shami",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1064812,
+        "name": "Rahul Chahar",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1159722,
+        "name": "Simarjeet Singh",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 942371,
+        "name": "Zeeshan Ansari",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 390484,
+        "name": "Jaydev Unadkat",
+        "role": "Bowler"
+      },
+      {
+        "player_id": 1306214,
+        "name": "Eshan Malinga",
+        "role": "Bowler"
+      }
+    ]
+  }
 }

@@ -132,7 +132,7 @@ class DataLoader:
         processed_data = self.bbb_data.copy()
         
         # Ensure numeric columns are properly typed
-        numeric_columns = ['runs', 'is_wicket', 'over', 'ball', 'innings']
+        numeric_columns = ['score', 'out', 'over', 'ball', 'innings']
         for col in numeric_columns:
             if col in processed_data.columns:
                 processed_data[col] = pd.to_numeric(processed_data[col], errors='coerce')
@@ -157,14 +157,14 @@ class DataLoader:
         processed_data['phase'] = processed_data['over'].apply(classify_phase)
         
         # Add additional analytical columns
-        if 'runs' in processed_data.columns and 'is_wicket' in processed_data.columns:
+        if 'score' in processed_data.columns and 'out' in processed_data.columns:
             try:
                 # Group by match and innings for calculations
                 grouped = processed_data.groupby(['match_id', 'innings'])
                 
                 # Calculate running total score and wickets
-                processed_data['running_score'] = grouped['runs'].cumsum()
-                processed_data['running_wickets'] = grouped['is_wicket'].cumsum()
+                processed_data['running_score'] = grouped['score'].cumsum()
+                processed_data['running_wickets'] = grouped['out'].cumsum()
                 
                 # Calculate balls remaining
                 processed_data['total_balls'] = grouped['over'].transform('count')
@@ -194,28 +194,29 @@ class DataLoader:
         
         venue_stats = {}
         
-        # Check if venue_id column exists
-        if 'venue_id' not in self.bbb_data.columns:
-            print("No venue_id column found in ball-by-ball data")
+        # Check if ground column exists
+        if 'ground' not in self.bbb_data.columns:
+            print("No ground column found in ball-by-ball data")
             return venue_stats
         
         # Ensure numeric columns are properly typed
-        numeric_columns = ['runs', 'is_wicket']
+        numeric_columns = ['score', 'out']
         for col in numeric_columns:
             if col in self.bbb_data.columns:
                 self.bbb_data[col] = pd.to_numeric(self.bbb_data[col], errors='coerce')
         
         # Group by venue
-        venue_groups = self.bbb_data.groupby('venue_id')
+        venue_groups = self.bbb_data.groupby('ground')
         
-        for venue_id, group in venue_groups:
+        for ground, group in venue_groups:
             # Get basic venue stats
-            innings_data = group.groupby(['match_id', 'innings'])
+            print(ground)
+            innings_data = group.groupby(['p_match', 'inns'])
             
             # Calculate innings totals
             innings_totals = innings_data.agg({
-                'runs': 'sum',
-                'is_wicket': 'sum'
+                'score': 'sum',
+                'out': 'sum'
             })
             
             # Calculate first and second innings stats
@@ -224,19 +225,19 @@ class DataLoader:
             second_innings = None
             
             try:
-                if 1 in innings_totals.index.get_level_values('innings'):
-                    first_innings = innings_totals.xs(1, level='innings')
-                if 2 in innings_totals.index.get_level_values('innings'):
-                    second_innings = innings_totals.xs(2, level='innings')
+                if 1 in innings_totals.index.get_level_values('inns'):
+                    first_innings = innings_totals.xs(1, level='inns')
+                if 2 in innings_totals.index.get_level_values('inns'):
+                    second_innings = innings_totals.xs(2, level='inns')
             except Exception as e:
-                print(f"Error analyzing innings data for venue {venue_id}: {e}")
+                print(f"Error analyzing innings data for venue {ground}: {e}")
             
             # Store venue statistics
-            venue_stats[venue_id] = {
-                'first_innings_avg_score': first_innings['runs'].mean() if first_innings is not None and not first_innings.empty else 0,
-                'first_innings_std_score': first_innings['runs'].std() if first_innings is not None and not first_innings.empty else 0,
-                'second_innings_avg_score': second_innings['runs'].mean() if second_innings is not None and not second_innings.empty else 0,
-                'second_innings_std_score': second_innings['runs'].std() if second_innings is not None and not second_innings.empty else 0,
+            venue_stats[ground] = {
+                'first_innings_avg_score': first_innings['score'].mean() if first_innings is not None and not first_innings.empty else 0,
+                'first_innings_std_score': first_innings['score'].std() if first_innings is not None and not first_innings.empty else 0,
+                'second_innings_avg_score': second_innings['score'].mean() if second_innings is not None and not second_innings.empty else 0,
+                'second_innings_std_score': second_innings['score'].std() if second_innings is not None and not second_innings.empty else 0,
                 'matches_played': len(innings_data.groups)
             }
             
@@ -244,8 +245,8 @@ class DataLoader:
             if 'phase' in group.columns:
                 try:
                     phase_stats = group.groupby('phase').agg({
-                        'runs': 'sum',
-                        'is_wicket': 'sum',
+                        'score': 'sum',
+                        'out': 'sum',
                         'over': 'count'  # count balls/overs
                     })
                     
@@ -253,12 +254,12 @@ class DataLoader:
                         try:
                             phase = int(phase_idx)  # Ensure phase is an integer
                             balls = stats['over']
-                            venue_stats[venue_id][f'phase_{phase}_run_rate'] = (stats['runs'] / balls) * 6 if balls > 0 else 0
-                            venue_stats[venue_id][f'phase_{phase}_wicket_rate'] = (stats['is_wicket'] / balls) * 6 if balls > 0 else 0
+                            venue_stats[ground][f'phase_{phase}_run_rate'] = (stats['score'] / balls) * 6 if balls > 0 else 0
+                            venue_stats[ground][f'phase_{phase}_wicket_rate'] = (stats['out'] / balls) * 6 if balls > 0 else 0
                         except (ValueError, TypeError) as e:
-                            print(f"Error processing phase {phase_idx} for venue {venue_id}: {e}")
+                            print(f"Error processing phase {phase_idx} for venue {ground}: {e}")
                 except Exception as e:
-                    print(f"Error calculating phase statistics for venue {venue_id}: {e}")
+                    print(f"Error calculating phase statistics for venue {ground}: {e}")
         
         self.venue_stats = venue_stats
         print(f"Generated statistical profiles for {len(venue_stats)} venues")
@@ -294,22 +295,21 @@ class DataLoader:
             
             # Process each player
             for player in players:
-                player_id = player.get('player_id')
-                
+                player_id = str(player.get('player_id'))
                 if not player_id:
                     continue
                 
                 # Create player entry with basic info
                 player_data = {
-                    'id': player_id,
+                    'player_id': player_id,
                     'name': player.get('name', f'Player {player_id}'),
-                    'main_role': player.get('main_role', 'unknown'),
+                    'main_role': player.get('role', 'unknown'),
                     'specific_roles': player.get('specific_roles', []),
-                    'team_id': team_id
                 }
-                
+                # print(player_data)
                 # Link batting stats if available
                 if player_id in self.batting_stats:
+                    # print(self.batting_stats[player_id])
                     player_data['batting_stats'] = self.batting_stats[player_id]
                 
                 # Link bowling stats if available

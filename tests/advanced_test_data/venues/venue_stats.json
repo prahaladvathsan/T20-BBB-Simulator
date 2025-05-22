@@ -1,0 +1,47 @@
+{
+  "venue1": {
+    "first_innings_avg_score": 165,
+    "first_innings_std_score": 20,
+    "second_innings_avg_score": 155,
+    "second_innings_std_score": 25,
+    "matches_played": 20,
+    "phase_1_run_rate": 8.2,
+    "phase_2_run_rate": 7.5,
+    "phase_3_run_rate": 8.8,
+    "phase_4_run_rate": 10.1,
+    "phase_1_wicket_rate": 0.8,
+    "phase_2_wicket_rate": 1.2,
+    "phase_3_wicket_rate": 1.4,
+    "phase_4_wicket_rate": 1.6
+  },
+  "venue2": {
+    "first_innings_avg_score": 175,
+    "first_innings_std_score": 18,
+    "second_innings_avg_score": 165,
+    "second_innings_std_score": 22,
+    "matches_played": 15,
+    "phase_1_run_rate": 8.5,
+    "phase_2_run_rate": 7.8,
+    "phase_3_run_rate": 9.2,
+    "phase_4_run_rate": 10.5,
+    "phase_1_wicket_rate": 0.7,
+    "phase_2_wicket_rate": 1.1,
+    "phase_3_wicket_rate": 1.3,
+    "phase_4_wicket_rate": 1.5
+  },
+  "venue3": {
+    "first_innings_avg_score": 155,
+    "first_innings_std_score": 22,
+    "second_innings_avg_score": 145,
+    "second_innings_std_score": 28,
+    "matches_played": 25,
+    "phase_1_run_rate": 7.8,
+    "phase_2_run_rate": 7.2,
+    "phase_3_run_rate": 8.5,
+    "phase_4_run_rate": 9.7,
+    "phase_1_wicket_rate": 0.9,
+    "phase_2_wicket_rate": 1.3,
+    "phase_3_wicket_rate": 1.5,
+    "phase_4_wicket_rate": 1.7
+  }
+}

@@ -220,14 +220,17 @@ class Player:
         phase_probs, phase_balls = self._get_phase_probabilities(phase)
         
         # bowler matchup probabilities
-        bowler_style = bowler.bowling_stats.get('bowling_style', 'unknown')
+        bowler_style = bowler.bowling_stats.get('bowl_style', 'unknown')
         matchup_probs, matchup_balls = self._get_bowler_matchup_probabilities(bowler_style)
 
         # Combine phase and matchup probabilities weighted by balls faced
         combined_probs = {}
-        for outcome in default_probs.keys():
-            combined_probs[outcome] = (phase_probs.get(outcome, 0) * phase_balls + 
-                                       matchup_probs.get(outcome, 0) * matchup_balls) / (phase_balls + matchup_balls)
+        if (phase_balls + matchup_balls) > 0:
+            for outcome in default_probs.keys():
+                combined_probs[outcome] = (phase_probs.get(outcome, 0) * phase_balls + 
+                                        matchup_probs.get(outcome, 0) * matchup_balls) / (phase_balls + matchup_balls)
+        else:
+            combined_probs = default_probs
         
         
         # Adjust for match situation
@@ -300,7 +303,7 @@ class Player:
                 return custom_probs, phase_balls
         
         # Fall back to default if we don't have enough data
-        return phase_defaults.get(phase, phase_defaults[self.MIDDLE]), 0
+        return phase_defaults.get(phase, phase_defaults[self.EARLY_MIDDLE]), 0
     
     def _get_bowler_matchup_probabilities(self, bowl_style: str) -> Tuple[Dict[int, float], int]:
         """
@@ -321,7 +324,11 @@ class Player:
         }
 
         if self.batting_stats and 'vs_bowler_styles' in self.batting_stats:
-            bowl_style_stats = self.batting_stats['vs_bowler_styles'][bowl_style]
+            # Check if batter has face this bowl_style before
+            if bowl_style in self.batting_stats['vs_bowler_styles']:
+                bowl_style_stats = self.batting_stats['vs_bowler_styles'][bowl_style]
+            else:
+                return default_probs, 0
 
             style_runs = bowl_style_stats.get('runs', 0)
             style_balls = bowl_style_stats.get('balls', 0)
@@ -365,7 +372,7 @@ class Player:
         return default_probs, 0
 
     
-    def get_bowling_outcome_probability(self, batsman, phase: int, match_state: Dict) -> Tuple[Dict[int, float], int]:
+    def get_bowling_outcome_probability(self, batsman, phase: int, match_state: Dict) -> Dict[int, float]:
         """
         Calculate probabilities for different bowling outcomes against a batsman.
         
@@ -375,7 +382,7 @@ class Player:
             match_state: Dictionary containing current match situation
             
         Returns:
-            Tuple of (probability distribution dict, number of balls the distribution is based on)
+            Dictionary mapping outcome codes to probabilities
         """
         # Default probability distribution for bowling
         default_probs = {
@@ -394,17 +401,20 @@ class Player:
         phase_probs, phase_balls = self._get_bowling_phase_probabilities(phase)
         
         # Adjust for batsman matchup
-        batsman_type = batsman.batting_stats.get('bat_hand', 'unknown')
+        batsman_type = batsman.batting_stats.get('bat_hand', 'unknown') if hasattr(batsman, 'batting_stats') else 'unknown'
         matchup_probs = self._get_batsman_matchup_probabilities(batsman_type)
 
         combined_probs = {}
-        for outcome in default_probs.keys():
-            combined_probs[outcome] = (phase_probs.get(outcome, 0) * phase_balls + 
-                                       matchup_probs.get(outcome, 0) * phase_balls) / (phase_balls + phase_balls)
         
-        
-        # Adjust for match situation
-        # situation_probs = self._adjust_bowling_for_match_situation(matchup_probs, match_state)
+        # Guard against division by zero
+        total_balls = phase_balls * 2  # phase_balls + phase_balls
+        if total_balls > 0:
+            for outcome in default_probs.keys():
+                combined_probs[outcome] = (phase_probs.get(outcome, 0) * phase_balls + 
+                                          matchup_probs.get(outcome, 0) * phase_balls) / total_balls
+        else:
+            # If we don't have enough data, use the default probabilities
+            combined_probs = default_probs.copy()
         
         # Ensure probabilities sum to 1
         total_prob = sum(combined_probs.values())
