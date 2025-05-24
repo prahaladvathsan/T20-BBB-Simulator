@@ -28,21 +28,25 @@ class Team:
         LATE_MIDDLE: (13, 16),
         DEATH: (17, 20)
     }
+
     
     # Position importance weights for batting
     BATTING_POSITION_WEIGHTS = {
-        1: 1.0,  # Opener
-        2: 1.0,  # Opener
-        3: 0.9,  # Top order
-        4: 0.9,  # Top order
-        5: 0.8,  # Middle order
-        6: 0.8,  # Middle order
-        7: 0.7,  # Finisher
-        8: 0.5,  # Lower order
-        9: 0.3,  # Lower order
-        10: 0.2, # Tail
-        11: 0.1  # Tail
+        1: 0.170919,
+        2: 0.196982,
+        3: 0.163785,
+        4: 0.142512,
+        5: 0.121843,
+        6: 0.085424,
+        7: 0.062353,
+        8: 0.033629,
+        9: 0.015203,
+        10: 0.005149,
+        11: 0.002201
     }
+
+    
+
     
     def __init__(self, team_id: str, team_data: Dict, player_objects: Dict):
         """Initialize team with players and strategies."""
@@ -91,13 +95,13 @@ class Team:
     def _assign_main_roles(self):
         """Assign main roles to players based on their main_role attribute."""
         for player_id, player in self.players.items():
-            if player.main_role == 'batsman':
+            if player.main_role == 'Batter':
                 self.batsmen.append(player_id)
-            elif player.main_role == 'bowler':
+            elif player.main_role == 'Bowler':
                 self.bowlers.append(player_id)
-            elif player.main_role == 'all-rounder':
+            elif player.main_role == 'All-Rounder':
                 self.all_rounders.append(player_id)
-            elif player.main_role == 'wicket-keeper':
+            elif player.main_role == 'WK-Batter':
                 self.wicket_keepers.append(player_id)
                 if player_id not in self.batsmen:
                     self.batsmen.append(player_id)
@@ -143,54 +147,46 @@ class Team:
         stats = player.batting_stats
         position_stats = stats.get('by_bat_pos', {}).get(str(position), {})
         
-        # Get phase-specific stats based on position
-        if position <= 2:  # Openers
-            phase = '1'  # Powerplay
-        elif position <= 5:  # Top order
-            phase = '2'  # Early middle
-        elif position <= 7:  # Middle order
-            phase = '3'  # Late middle
-        else:  # Lower order
-            phase = '4'  # Death overs
+        # Read phase weights from CSV
+        phase_weights_df = pd.read_csv('data/processed/phase_weights.csv')
+        phase_weights = {
+            '1': phase_weights_df.iloc[position-1, 1] / 100,  # Powerplay
+            '2': phase_weights_df.iloc[position-1, 2] / 100,  # Early middle
+            '3': phase_weights_df.iloc[position-1, 3] / 100,  # Late middle
+            '4': phase_weights_df.iloc[position-1, 4] / 100   # Death overs
+        }
             
-        phase_stats = stats.get('by_phase', {}).get(phase, {})
+        # Calculate weighted phase stats
+        weighted_phase_average = 0
+        weighted_phase_sr = 0
         
-        # Get overall stats
-        total_runs = stats.get('total_runs', 0)
-        total_balls = stats.get('total_balls', 1)  # Avoid division by zero
-        total_dismissals = stats.get('dismissals', 1)  # Avoid division by zero
+        for phase in ['1', '2', '3', '4']:
+            phase_stats = stats.get('by_phase', {}).get(phase, {})
+            phase_runs = phase_stats.get('runs', 0)
+            phase_balls = phase_stats.get('balls', 0)
+            phase_dismissals = phase_stats.get('dismissals', 1)  # Avoid division by zero
+            
+            phase_average = phase_runs / phase_dismissals if phase_dismissals > 0 else 0
+            phase_sr = (phase_runs / phase_balls * 100) if phase_balls > 0 else 0
+            
+            weighted_phase_average += phase_average * phase_weights[phase]
+            weighted_phase_sr += phase_sr * phase_weights[phase]
         
-        # Calculate base stats
-        overall_average = total_runs / total_dismissals if total_dismissals > 0 else 0
-        overall_sr = (total_runs / total_balls * 100) if total_balls > 0 else 0
-        
-        # Get position-specific stats with fallbacks to overall stats
-        pos_runs = position_stats.get('runs', 0)
-        pos_balls = position_stats.get('balls', 0)
-        pos_dismissals = position_stats.get('dismissals', 1)  # Avoid division by zero
-        
-        pos_average = pos_runs / pos_dismissals if pos_dismissals > 0 else overall_average
-        pos_sr = (pos_runs / pos_balls * 100) if pos_balls > 0 else overall_sr
-        
-        # Get phase-specific stats with fallbacks
-        phase_runs = phase_stats.get('runs', 0)
-        phase_balls = phase_stats.get('balls', 0)
-        phase_dismissals = phase_stats.get('dismissals', 1)  # Avoid division by zero
-        
-        phase_average = phase_runs / phase_dismissals if phase_dismissals > 0 else overall_average
-        phase_sr = (phase_runs / phase_balls * 100) if phase_balls > 0 else overall_sr
+        # Get position-specific stats
+        pos_average = position_stats.get('average', weighted_phase_average * 0.9)
+        pos_sr = position_stats.get('strike_rate', weighted_phase_sr * 0.9) 
         
         # Calculate weighted score with fallbacks
         position_score = (
-            pos_average * 0.3 +           # 30% weight to position average
-            pos_sr * 0.2 +                # 20% weight to position SR
-            phase_average * 0.2 +         # 20% weight to phase average
-            phase_sr * 0.2 +              # 20% weight to phase SR
+            pos_average * 0.2 +           # 30% weight to position average
+            pos_sr * 0.4 +                # 20% weight to position SR
+            weighted_phase_average * 0.1 + # 20% weight to phase average
+            weighted_phase_sr * 0.2 +      # 20% weight to phase SR
             stats.get('boundary_percentage', 0) * 0.1  # 10% weight to boundary hitting
         )
         
         # Ensure the score is valid and non-negative
-        return max(1.0, float(position_score))
+        return max(0.0, float(position_score))
     
     def _create_batting_position_rankings(self) -> pd.DataFrame:
         """
@@ -300,7 +296,7 @@ class Team:
         
         return rankings
     
-    def pick_optimal_xi(self) -> Tuple[List[str], List[str], Dict[int, str]]:
+    def pick_optimal_xi_v1(self) -> Tuple[List[str], List[str], Dict[int, str]]:
         """
         Select the optimal playing XI, batting order, and bowling allocation.
         
@@ -313,19 +309,18 @@ class Team:
         # 1. Calculate theoretical optimal batting and bowling
         # Get theoretical max batting performance
         theoretical_batting_order, max_batting_score = self._optimize_batting_order_unlimited()
-        # Print theoretical batting order names and not IDs
+        print("Theoretical batting order:")
         print([self.players[player_id].name for player_id in theoretical_batting_order])
-
+        print(max_batting_score)
         
         # Get theoretical max bowling performance and allocation
         theoretical_bowling_allocation, max_bowling_score = self._optimize_bowling_allocation_unlimited()
-        
+        print("Theoretical bowling allocation:")
+        print(theoretical_bowling_allocation)
+        print(max_bowling_score)
         # 2. Start by identifying constraints
         # Get all players who can bowl
-        bowlers = set()
-        for over in range(1, 21):
-            for player in self.bowling_over_rankings.at[over, 'rankings']:
-                bowlers.add(player['player_id'])
+        bowlers = set(self.bowlers + self.all_rounders)
         
         # Get all wicketkeepers
         wicketkeepers = set(self.wicket_keepers)
@@ -462,7 +457,7 @@ class Team:
         print(f"Total bowling score: {total_score}")
         return allocation, total_score
     
-    def _optimize_team_selection(self, bowlers, wicketkeepers, max_batting_score, max_bowling_score,
+    def _optimize_team_selection_v1(self, bowlers, wicketkeepers, max_batting_score, max_bowling_score,
                                theoretical_batting_order, theoretical_bowling_allocation):
         """
         Use simulated annealing to find the optimal team selection.
@@ -509,6 +504,7 @@ class Team:
         best_batting_order = current_batting_order.copy()
         best_bowling_allocation = current_bowling_allocation.copy()
         best_score = current_score
+        print(best_score)
         
         # Main simulated annealing loop
         temperature = initial_temperature
@@ -524,6 +520,7 @@ class Team:
                 # Calculate combined normalized score
                 neighbor_score = (neighbor_batting_score / max_batting_score + 
                                  neighbor_bowling_score / max_bowling_score)
+                print(neighbor_score)
                 
                 # Calculate acceptance probability
                 delta = neighbor_score - current_score
@@ -531,6 +528,7 @@ class Team:
                 
                 # Accept or reject
                 if random.random() < acceptance_probability:
+                    print("Accepted")
                     current_team = neighbor_team
                     current_batting_order = neighbor_batting_order
                     current_bowling_allocation = neighbor_bowling_allocation
@@ -542,7 +540,7 @@ class Team:
                         best_batting_order = current_batting_order.copy()
                         best_bowling_allocation = current_bowling_allocation.copy()
                         best_score = current_score
-                        print([self.players[player_id].name for player_id in best_team])
+                        print([self.players[player_id].name for player_id in best_batting_order])
             
             # Cool down
             temperature *= cooling_rate
@@ -617,7 +615,7 @@ class Team:
         # Add a random available player
         player_to_add = random.choice(available_players)
         neighbor.add(player_to_add)
-        
+
         # Check constraints
         # 1. At least one wicketkeeper
         has_keeper = any(p in wicketkeepers for p in neighbor)
@@ -637,7 +635,6 @@ class Team:
                 available_keepers = [p for p in wicketkeepers if p not in neighbor]
                 
                 if non_bowlers and available_keepers:
-                    player_to_remove = random.choice(non_bowlers)
                     player_to_add = random.choice(available_keepers)
                     
                     neighbor.remove(player_to_remove)
@@ -649,7 +646,6 @@ class Team:
                 available_bowlers = [p for p in bowlers if p not in neighbor]
                 
                 if non_bowlers and available_bowlers:
-                    player_to_remove = random.choice(non_bowlers)
                     player_to_add = random.choice(available_bowlers)
                     
                     neighbor.remove(player_to_remove)
@@ -841,5 +837,369 @@ class Team:
         # If no bowlers are available (shouldn't happen in normal circumstances)
         # Return the first bowler from the team
         return list(self.players.keys())[0]
+    
+    def _optimize_team_selection(self, bowlers, wicketkeepers, max_batting_score, max_bowling_score,
+                            theoretical_batting_order, theoretical_bowling_allocation):
+        """
+        Use branch-and-bound to find the optimal team selection.
         
+        Args:
+            bowlers: Set of player IDs who can bowl
+            wicketkeepers: Set of wicketkeeper IDs
+            max_batting_score: Theoretical maximum batting score
+            max_bowling_score: Theoretical maximum bowling score
+            theoretical_batting_order: Unconstrained optimal batting order
+            theoretical_bowling_allocation: Unconstrained optimal bowling allocation
+            
+        Returns:
+            Tuple containing:
+            - Optimal XI (list of player IDs)
+            - Optimal batting order (list of player IDs)
+            - Optimal bowling allocation (dict: over -> bowler_id)
+            - Combined performance score
+        """
+        # Initialize best solution tracking
+        self.best_score = -float('inf')
+        self.best_team = None
+        self.best_batting_order = None
+        self.best_bowling_allocation = None
+        
+        # Cache for memoization
+        self.score_cache = {}
+        
+        # Sort players by individual performance for better pruning
+        sorted_players = self._sort_players_by_performance()
+        
+        # Start branch-and-bound search
+        self._branch_and_bound(
+            current_team=set(),
+            remaining_players=sorted_players,
+            num_wicketkeepers=0,
+            num_bowlers=0,
+            bowlers=bowlers,
+            wicketkeepers=wicketkeepers,
+            max_batting_score=max_batting_score,
+            max_bowling_score=max_bowling_score
+        )
+        
+        return list(self.best_team), self.best_batting_order, self.best_bowling_allocation, self.best_score
+
+
+    def _sort_players_by_performance(self):
+        """
+        Sort players by their individual performance metric for branch-and-bound.
+        
+        Returns:
+            List of player IDs sorted by performance (best first)
+        """
+        player_scores = []
+        
+        for player_id, player in self.players.items():
+            # Calculate individual performance score
+            batting_score = 0
+            bowling_score = 0
+            print(player.name)
+            
+            # Get best batting position score for this player
+            if hasattr(player, 'batting_stats'):
+                for position in range(1, 12):
+                    score = self._calculate_batting_position_score(player, position)
+                    batting_score = max(batting_score, score * self.BATTING_POSITION_WEIGHTS[position])
+                    if score>0:
+                        print(position,score)
+            
+            # Get the sum of the 4 best bowling over scores for this player
+            
+            if hasattr(player, 'bowling_stats'):
+                over_scores = []
+                for over in range(1, 21):
+                    score = self._calculate_bowling_over_score(player, over)
+                    over_scores.append(score)
+                    if score>0:
+                        print(over, score)
+                over_scores.sort()
+                bowling_score = sum(over_scores[:4])
+
+            print(batting_score, bowling_score)
+            # Combined score (weighted sum)
+            combined_score = np.sqrt(batting_score**2 + bowling_score**2)
+            player_scores.append((player_id, player.name, combined_score))
+        
+        # Sort by score in descending order
+        player_scores.sort(key=lambda x: x[2], reverse=True)
+
+        print(player_scores)
+        return [player_id for player_id, _, _ in player_scores]
+
+
+    def _branch_and_bound(self, current_team, remaining_players, num_wicketkeepers, num_bowlers,
+                        bowlers, wicketkeepers, max_batting_score, max_bowling_score):
+        """
+        Recursive branch-and-bound search for optimal team.
+        
+        Args:
+            current_team: Set of currently selected player IDs
+            remaining_players: List of player IDs yet to be considered
+            num_wicketkeepers: Count of wicketkeepers in current team
+            num_bowlers: Count of bowlers in current team
+            bowlers: Set of all player IDs who can bowl
+            wicketkeepers: Set of all wicketkeeper IDs
+            max_batting_score: Theoretical maximum batting score
+            max_bowling_score: Theoretical maximum bowling score
+        """
+        # Base case: team of 11 is formed
+        if len(current_team) == 11:
+            # Check constraints
+            if num_wicketkeepers >= 1 and num_bowlers >= 5:
+                # Evaluate team
+                team_tuple = tuple(sorted(current_team))
+                
+                # Check cache first
+                if team_tuple in self.score_cache:
+                    score, batting_order, bowling_allocation = self.score_cache[team_tuple]
+                else:
+                    batting_order, batting_score = self._optimize_batting_order(current_team)
+                    bowling_allocation, bowling_score = self._optimize_bowling_allocation(current_team)
+                    score = (batting_score / max_batting_score + bowling_score / max_bowling_score)
+                    self.score_cache[team_tuple] = (score, batting_order, bowling_allocation)
+                
+                # Update best if better
+                if score > self.best_score:
+                    self.best_score = score
+                    self.best_team = current_team.copy()
+                    self.best_batting_order = batting_order
+                    self.best_bowling_allocation = bowling_allocation
+                    print(f"New best score: {score:.4f}")
+                    print([self.players[pid].name for pid in batting_order])
+            return
+        
+        # Pruning: not enough players left
+        if len(current_team) + len(remaining_players) < 11:
+            return
+        
+        # Pruning: can't satisfy wicketkeeper constraint
+        remaining_wicketkeepers = sum(1 for pid in remaining_players if pid in wicketkeepers)
+        if num_wicketkeepers == 0 and remaining_wicketkeepers == 0:
+            return
+        
+        # Pruning: can't satisfy bowler constraint
+        remaining_bowlers = sum(1 for pid in remaining_players if pid in bowlers)
+        if num_bowlers + remaining_bowlers < 5:
+            return
+        
+        # Calculate upper bound
+        upper_bound = self._calculate_upper_bound(
+            current_team, remaining_players, max_batting_score, max_bowling_score
+        )
+        
+        # Prune if upper bound is not promising
+        if upper_bound <= self.best_score:
+            return
+        
+        # Branch on next player
+        if remaining_players:
+            next_player = remaining_players[0]
+            remaining = remaining_players[1:]
+            
+            # Branch 1: Include the player
+            new_team = current_team.copy()
+            new_team.add(next_player)
+            new_num_wicketkeepers = num_wicketkeepers + (1 if next_player in wicketkeepers else 0)
+            new_num_bowlers = num_bowlers + (1 if next_player in bowlers else 0)
+            
+            self._branch_and_bound(
+                new_team, remaining, new_num_wicketkeepers, new_num_bowlers,
+                bowlers, wicketkeepers, max_batting_score, max_bowling_score
+            )
+            
+            # Branch 2: Exclude the player
+            self._branch_and_bound(
+                current_team, remaining, num_wicketkeepers, num_bowlers,
+                bowlers, wicketkeepers, max_batting_score, max_bowling_score
+            )
+
+
+    def _calculate_upper_bound(self, current_team, remaining_players, max_batting_score, max_bowling_score):
+        """
+        Calculate upper bound for the current branch.
+        
+        Args:
+            current_team: Set of currently selected player IDs
+            remaining_players: List of player IDs yet to be considered
+            max_batting_score: Theoretical maximum batting score
+            max_bowling_score: Theoretical maximum bowling score
+            
+        Returns:
+            float: Upper bound score for this branch
+        """
+        # Get current team size
+        current_size = len(current_team)
+        spots_left = 11 - current_size
+        
+        if spots_left == 0:
+            # If team is complete, return actual score
+            batting_order, batting_score = self._optimize_batting_order(current_team)
+            bowling_allocation, bowling_score = self._optimize_bowling_allocation(current_team)
+            return (batting_score / max_batting_score + bowling_score / max_bowling_score)
+        
+        # Estimate upper bound by adding best possible players
+        # Get scores for current team members
+        current_batting_scores = []
+        current_bowling_scores = []
+        
+        for player_id in current_team:
+            player = self.players[player_id]
+            
+            # Best batting score
+            max_bat_score = 0
+            for pos in range(1, 12):
+                score = self._calculate_batting_position_score(player, pos)
+                max_bat_score = max(max_bat_score, score * self.BATTING_POSITION_WEIGHTS[pos])
+            current_batting_scores.append(max_bat_score)
+            
+            # Average bowling score
+            if hasattr(player, 'bowling_stats'):
+                total_bowl_score = 0
+                overs = 0
+                for over in range(1, 21):
+                    score = self._calculate_bowling_over_score(player, over)
+                    if score > 0:
+                        total_bowl_score += score
+                        overs += 1
+                if overs > 0:
+                    current_bowling_scores.append(total_bowl_score / overs * 4)  # Max 4 overs
+        
+        # Get potential scores from remaining players
+        remaining_batting_scores = []
+        remaining_bowling_scores = []
+        
+        for player_id in remaining_players[:spots_left]:  # Only consider as many as we need
+            player = self.players[player_id]
+            
+            # Best batting score
+            max_bat_score = 0
+            for pos in range(1, 12):
+                score = self._calculate_batting_position_score(player, pos)
+                max_bat_score = max(max_bat_score, score * self.BATTING_POSITION_WEIGHTS[pos])
+            remaining_batting_scores.append(max_bat_score)
+            
+            # Average bowling score
+            if hasattr(player, 'bowling_stats'):
+                total_bowl_score = 0
+                overs = 0
+                for over in range(1, 21):
+                    score = self._calculate_bowling_over_score(player, over)
+                    if score > 0:
+                        total_bowl_score += score
+                        overs += 1
+                if overs > 0:
+                    remaining_bowling_scores.append(total_bowl_score / overs * 4)
+        
+        # Combine and get top 11 batting scores
+        all_batting_scores = current_batting_scores + remaining_batting_scores
+        all_batting_scores.sort(reverse=True)
+        estimated_batting_score = sum(all_batting_scores[:11])
+        
+        # Combine and get top bowling scores (considering max 20 overs)
+        all_bowling_scores = current_bowling_scores + remaining_bowling_scores
+        all_bowling_scores.sort(reverse=True)
+        estimated_bowling_score = sum(all_bowling_scores[:5])  # Roughly 5 bowlers * 4 overs
+        
+        # Return normalized upper bound
+        return (estimated_batting_score / max_batting_score + estimated_bowling_score / max_bowling_score)
+
+
+    def pick_optimal_xi(self) -> Tuple[List[str], List[str], Dict[int, str]]:
+        """
+        Select the optimal playing XI, batting order, and bowling allocation.
+        
+        Returns:
+            Tuple containing:
+            - List of player IDs in the optimal XI
+            - List of player IDs in optimal batting order
+            - Dict mapping overs to bowler IDs for optimal bowling allocation
+        """
+        # 1. Calculate theoretical optimal batting and bowling
+        # Get theoretical max batting performance
+        theoretical_batting_order, max_batting_score = self._optimize_batting_order_unlimited()
+        print("Theoretical batting order:")
+        print([self.players[player_id].name for player_id in theoretical_batting_order])
+        print(f"Max batting score: {max_batting_score}")
+        
+        # Get theoretical max bowling performance and allocation
+        theoretical_bowling_allocation, max_bowling_score = self._optimize_bowling_allocation_unlimited()
+        print("Theoretical bowling allocation:")
+        print(f"Max bowling score: {max_bowling_score}")
+        
+        # 2. Start by identifying constraints
+        # Get all players who can bowl
+        bowlers = set(self.bowlers + self.all_rounders)
+        
+        # Get all wicketkeepers
+        wicketkeepers = set(self.wicket_keepers)
+        
+        # 3. Search for best combination satisfying constraints using branch-and-bound
+        best_xi, best_batting_order, best_bowling_allocation, best_score = self._optimize_team_selection(
+            bowlers, wicketkeepers, max_batting_score, max_bowling_score, 
+            theoretical_batting_order, theoretical_bowling_allocation
+        )
+        
+        print(f"\nFinal optimal XI with score {best_score:.4f}:")
+        print([self.players[pid].name for pid in best_xi])
+        
+        return best_xi, best_batting_order, best_bowling_allocation
+    
+    def pick_optimal_xi_v0(self) -> Tuple[List[str], List[str], Dict[int, str]]:
+        """
+        Select the optimal playing XI, batting order, and bowling allocation using brute force.
+        
+        Returns:
+            Tuple containing:
+            - List of player IDs in the optimal XI
+            - List of player IDs in optimal batting order
+            - Dict mapping overs to bowler IDs for optimal bowling allocation
+        """
+        # Get all players who can bowl
+        bowlers = set(self.bowlers + self.all_rounders)
+
+        # Get all wicketkeepers
+        wicketkeepers = set(self.wicket_keepers)
+        
+        # Get all players
+        players = set(self.players.keys())
+
+        theoretical_batting_order, max_batting_score = self._optimize_batting_order_unlimited()
+        theoretical_bowling_allocation, max_bowling_score = self._optimize_bowling_allocation_unlimited()
+        
+        # Generate all possible combinations of 11 players
+        from itertools import combinations
+        
+        best_score = -float('inf')
+        best_xi = None
+        best_batting_order = None
+        
+        # Iterate through all possible combinations of 11 players with a progress bar
+        total_combinations = len(list(combinations(players, 11)))
+        for i, xi in enumerate(combinations(players, 11)):
+            if i % 1000 == 0:
+                print(f"Progress: {i/total_combinations*100:.2f}%")
+
+            # Check if the combination satisfies the constraints
+            if len(set(xi) & bowlers) >= 5 and len(set(xi) & wicketkeepers) >= 1:
+                # Evaluate the team
+                batting_order, batting_score = self._optimize_batting_order(xi)
+                bowling_allocation, bowling_score = self._optimize_bowling_allocation(xi)
+                score = (batting_score / max_batting_score + bowling_score / max_bowling_score)
+                
+                # Update best if score is higher
+                if score > best_score:
+                    best_score = score
+                    best_xi = xi
+                    best_batting_order = batting_order
+                    best_bowling_allocation = bowling_allocation
+
+        print(f"\nFinal optimal XI with score {best_score:.4f}:")
+        print([self.players[pid].name for pid in best_xi])
+        
+        return best_xi, best_batting_order, best_bowling_allocation
         

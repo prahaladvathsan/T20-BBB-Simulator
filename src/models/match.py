@@ -278,9 +278,7 @@ class Match:
                 if not innings_data['current_batsmen']:
                     # No batsmen left, innings is over
                     break
-                # Debug statements
-                print(over,ball)
-                print(innings_data['current_batsmen'])
+
                 # Get current batsmen and bowler objects
                 striker_id = innings_data['current_batsmen'][0]
                 non_striker_id = innings_data['current_batsmen'][1] if len(innings_data['current_batsmen']) > 1 else None
